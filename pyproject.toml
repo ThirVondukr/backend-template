@@ -1,0 +1,75 @@
+[tool.poetry]
+name = "fastapi-cookiecutter"
+version = "0.1.0"
+description = ""
+authors = ["Doctor <thirvondukr@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.75.0"
+pydantic = "^1.9.0"
+uvicorn = "^0.17.6"
+SQLAlchemy = "^1.4.32"
+alembic = "^1.7.7"
+asyncpg = "^0.25.0"
+python-dotenv = "^0.19.2"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+mypy = "^0.941"
+pytest = "^7.1.1"
+pytest-asyncio = "^0.18.2"
+coverage = "^6.3.2"
+httpx = "^0.22.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+omit = ["tests", "alembic"]
+command_line = "-m pytest -v"
+concurrency = ["greenlet", "thread"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
+show_missing = true
+skip_covered = true
+skip_empty = true
+precision = 2
+
+[tool.mypy]
+plugins = [
+    "sqlalchemy.ext.mypy.plugin",
+    "pydantic.mypy",
+]
+exclude = "(alembic)"
+
+allow_redefinition = true
+
+follow_imports = "silent"
+ignore_missing_imports = true
+
+check_untyped_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_any_generics = true
+no_implicit_optional = true
+
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+
+strict_optional = true
+strict_equality = true
+
+[tool.isort]
+profile = "black"

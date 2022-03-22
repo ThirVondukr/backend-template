@@ -1,0 +1,4 @@
+[flake8]
+exclude=.venv
+max_line_length=80
+ignore=E501
