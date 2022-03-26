@@ -12,15 +12,15 @@ uvicorn = "^0.17.6"
 SQLAlchemy = "^1.4.32"
 alembic = "^1.7.7"
 asyncpg = "^0.25.0"
-python-dotenv = "^0.19.2"
+python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
-mypy = "^0.941"
+mypy = "^0.942"
 pytest = "^7.1.1"
-pytest-asyncio = "^0.18.2"
+pytest-asyncio = "^0.18.3"
 coverage = "^6.3.2"
 httpx = "^0.22.0"
 
@@ -29,7 +29,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.coverage.run]
-omit = ["tests", "alembic"]
+source = ["src"]
 command_line = "-m pytest -v"
 concurrency = ["greenlet", "thread"]
 
