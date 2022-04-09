@@ -51,8 +51,6 @@ plugins = [
 ]
 exclude = "(alembic)"
 
-allow_redefinition = true
-
 follow_imports = "silent"
 ignore_missing_imports = true
 
