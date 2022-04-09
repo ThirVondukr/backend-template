@@ -23,9 +23,12 @@ async def session(engine: AsyncEngine) -> AsyncSession:
     async with engine.connect() as conn:
         transaction = await conn.begin()
         async_sessionmaker.configure(bind=conn)
+
         async with async_sessionmaker() as session:
             yield session
-        await transaction.rollback()
+
+        if transaction.is_active:
+            await transaction.rollback()
 
 
 @pytest.fixture(scope="session", autouse=True)
