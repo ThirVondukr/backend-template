@@ -71,6 +71,8 @@ pytest:
 
 build-image:
   stage: build
+  services:
+    - docker:dind
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH || true
