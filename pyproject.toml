@@ -6,23 +6,23 @@ authors = ["Doctor <thirvondukr@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.75.0"
-pydantic = "^1.9.0"
+fastapi = "^0.78.0"
+pydantic = "^1.9.1"
 uvicorn = "^0.17.6"
 SQLAlchemy = "^1.4.32"
-alembic = "^1.7.7"
+alembic = "^1.8.0"
 asyncpg = "^0.25.0"
 python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "^22.3.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
-mypy = "^0.942"
-pytest = "^7.1.1"
+mypy = "^0.961"
+pytest = "^7.1.2"
 pytest-asyncio = "^0.18.3"
-coverage = "^6.3.2"
-httpx = "^0.22.0"
+coverage = "^6.4.1"
+httpx = "^0.23.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
