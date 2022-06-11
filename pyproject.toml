@@ -33,6 +33,9 @@ source = ["src"]
 command_line = "-m pytest -v"
 concurrency = ["greenlet", "thread"]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [tool.coverage.report]
 exclude_lines = [
     "pragma: no cover",
