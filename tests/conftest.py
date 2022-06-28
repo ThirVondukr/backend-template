@@ -1,4 +1,5 @@
 import asyncio
+import sys
 from asyncio import AbstractEventLoop
 from typing import AsyncIterable, Iterable
 
@@ -32,6 +33,9 @@ async def http_client(fastapi_app: FastAPI) -> AsyncIterable[httpx.AsyncClient]:
 
 @pytest.fixture(scope="session")
 def event_loop() -> Iterable[AbstractEventLoop]:
+    if sys.platform.startswith("win"):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
     policy = asyncio.get_event_loop_policy()
     loop = policy.get_event_loop()
     yield loop

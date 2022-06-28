@@ -17,5 +17,9 @@ class DatabaseSettings(BaseSettings):
     def url(self) -> str:
         return f"{self.driver}://{self.username}:{self.password}@{self.host}/{self.database}"
 
+    @property
+    def alembic_url(self) -> str:
+        return self.url.replace("+asyncpg", "")
+
 
 db = DatabaseSettings()

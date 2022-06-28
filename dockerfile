@@ -16,7 +16,7 @@ USER app
 WORKDIR /app
 
 COPY --from=build ./requirements.txt .
-RUN pip install -r requirements.txt && pip install uvloop==0.16.0
+RUN pip install -r requirements.txt
 
 COPY ./src ./src
 COPY alembic.ini ./
