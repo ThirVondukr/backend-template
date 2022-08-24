@@ -20,7 +20,7 @@ class CommitSessionMiddleware:
             if "state" in scope and (
                 session := scope["state"].get("sqlalchemy_session")
             ):
-                if session.in_transaction():
+                if session.is_active:
                     await session.commit()
             await send(message)
 
