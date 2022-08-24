@@ -1,4 +1,3 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 
