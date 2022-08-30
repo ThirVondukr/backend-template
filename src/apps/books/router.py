@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from apps.books.dto import BookCreateDto
+from apps.books.exceptions import BookAlreadyExists
 from apps.books.schema import BookCreateSchema, BookSchema
-from db.dependencies import get_session
-from db.models import Book
+from apps.books.services import BookService
 
 router = APIRouter(
     tags=["books"],
@@ -13,14 +13,36 @@ router = APIRouter(
 
 @router.post(
     "",
-    responses={status.HTTP_201_CREATED: {"model": BookSchema}},
+    responses={
+        status.HTTP_201_CREATED: {"model": BookSchema},
+    },
     status_code=status.HTTP_201_CREATED,
 )
 async def books_create(
-    schema: BookCreateSchema, session: AsyncSession = Depends(get_session)
+    schema: BookCreateSchema,
+    book_service: BookService = Depends(),
 ) -> BookSchema:
-    book = Book(**schema.dict())
-    session.add(book)
-    await session.flush()
-    await session.refresh(book)
+    try:
+        book = await book_service.create(dto=BookCreateDto.from_orm(schema))
+    except BookAlreadyExists as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST) from e
+
+    return BookSchema.from_orm(book)
+
+
+@router.get(
+    "/{book_id}",
+    responses={
+        status.HTTP_200_OK: {"model": BookSchema},
+        status.HTTP_404_NOT_FOUND: {"description": "Book not found"},
+    },
+)
+async def books_retrieve(
+    book_id: int,
+    book_service: BookService = Depends(),
+) -> BookSchema:
+    book = await book_service.get_one(book_id=book_id)
+    if not book:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
     return BookSchema.from_orm(book)

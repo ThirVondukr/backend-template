@@ -12,6 +12,7 @@ dotenv.load_dotenv(".env")
 
 pytest_plugins = [
     "conftest_db",
+    "conftest_services",
 ]
 
 

@@ -1,0 +1,2 @@
+class BookAlreadyExists(Exception):
+    pass
