@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from apps.books.dto import BookCreateDto
-from apps.books.exceptions import BookAlreadyExists
-from apps.books.schema import BookCreateSchema, BookSchema
-from apps.books.services import BookService
+from .dto import BookCreateDto
+from .exceptions import BookAlreadyExists
+from .schema import BookCreateSchema, BookSchema
+from .services import BookService
 
 router = APIRouter(
     tags=["books"],
