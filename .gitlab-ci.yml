@@ -11,20 +11,19 @@ stages:
   cache:
     - key:
         files:
-          - poetry.lock
+          - pdm.lock
       paths:
         - .venv
         - .cache/pip
   only:
     changes:
       - "**/*.py"
-      - poetry.lock
+      - pdm.lock
       - pyproject.toml
 
   before_script:
-    - pip install poetry
-    - poetry config virtualenvs.in-project true
-    - poetry install
+    - pip install pdm
+    - pdm install
   variables:
     GIT_STRATEGY: clone
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
@@ -32,22 +31,22 @@ stages:
 mypy:
   <<: *lint_job
   script:
-    - poetry run mypy .
+    - pdm run mypy .
 
 black:
   <<: *lint_job
   script:
-    - poetry run black . --check
+    - pdm run black . --check
 
 isort:
   <<: *lint_job
   script:
-    - poetry run isort . --check
+    - pdm run isort . --check
 
 flake8:
   <<: *lint_job
   script:
-    - poetry run flake8
+    - pdm run flake8
 
 pytest:
   <<: *lint_job
@@ -61,9 +60,9 @@ pytest:
 
   script:
     - export PYTHONPATH=$PYTHONPATH:./src
-    - poetry run coverage run
-    - poetry run coverage report -m
-    - poetry run coverage xml
+    - pdm run coverage run
+    - pdm run coverage report -m
+    - pdm run coverage xml
   coverage: "/^TOTAL.*\\s(\\d*)/"
   artifacts:
     reports:
