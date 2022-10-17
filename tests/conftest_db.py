@@ -1,5 +1,5 @@
 import os
-from typing import Iterable
+from typing import AsyncGenerator, Iterable
 
 import pytest
 import sqlalchemy_utils
@@ -44,14 +44,14 @@ async def run_migrations(
     create_database: None,
     engine: AsyncEngine,
     alembic_config: config.Config,
-    sync_database_url: str,
+    database_url: str,
 ) -> None:
     def run_upgrade(connection: Connection, cfg: config.Config) -> None:
         cfg.attributes["connection"] = connection
         command.upgrade(cfg, revision="head")
 
     async with engine.begin() as conn:
-        alembic_config.set_main_option("sqlalchemy.url", sync_database_url)
+        alembic_config.set_main_option("sqlalchemy.url", database_url)
         await conn.run_sync(run_upgrade, alembic_config)
         await conn.commit()
 
@@ -70,7 +70,7 @@ def engine(database_url: str) -> AsyncEngine:
 async def session(
     run_migrations: None,
     engine: AsyncEngine,
-) -> AsyncSession:
+) -> AsyncGenerator[AsyncSession, None]:
     async with engine.connect() as conn:
         transaction = await conn.begin()
         async_sessionmaker.configure(bind=conn)

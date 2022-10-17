@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps import books
@@ -17,6 +18,6 @@ def create_app() -> FastAPI:
     async def healthcheck(
         session: AsyncSession = Depends(get_session),
     ) -> None:
-        await session.execute("select 1")
+        await session.execute(text("select 1"))
 
     return app

@@ -1,14 +1,13 @@
 FROM python:3.10-slim as build
-ENV POETRY_VERSION=1.1.13
 
-RUN pip install poetry==$POETRY_VERSION
-COPY ./pyproject.toml ./poetry.lock ./
-RUN poetry export -f requirements.txt --output requirements.txt
+RUN pip install pdm
+COPY ./pyproject.toml ./pdm.lock ./
+RUN pdm export --prod -f requirements -o requirements.txt
 
 FROM python:3.10-slim
 ENV PYTHONPATH=$PYTHONPATH:/app/src \
-    PATH=$PATH:/home/app/.local/bin
-RUN apt-get update && apt-get install -y curl
+    PATH=$PATH:/home/app/.local/bin \
+    PYTHONUNBUFFERED=1
 
 RUN addgroup --system app && adduser --system --group app
 USER app
@@ -16,7 +15,7 @@ USER app
 WORKDIR /app
 
 COPY --from=build ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./src ./src
 COPY alembic.ini ./
