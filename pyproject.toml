@@ -44,8 +44,9 @@ dev = [
 
 [tool.coverage.run]
 source = ["src"]
+omit = ["src/alembic/*"]
 command_line = "-m pytest -v"
-concurrency = ["greenlet", "thread"]
+concurrency = ["greenlet"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
