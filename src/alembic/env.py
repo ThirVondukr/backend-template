@@ -1,11 +1,9 @@
 # flake8: noqa E402
+import asyncio
 
 import dotenv
 
-# Load local .env file to generate/run migrations
 dotenv.load_dotenv(".env")
-
-import asyncio
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
@@ -13,9 +11,9 @@ from sqlalchemy.engine import Connectable, Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 import db.models  # noqa
-import settings
 from alembic import context
 from db import Base
+from settings import DatabaseSettings, get_settings
 
 config = context.config
 
@@ -23,7 +21,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 if not config.get_main_option("sqlalchemy.url"):
-    config.set_main_option("sqlalchemy.url", settings.db.url)
+    config.set_main_option("sqlalchemy.url", get_settings(DatabaseSettings).url)
 
 target_metadata = Base.metadata
 

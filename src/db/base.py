@@ -1,22 +1,5 @@
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base
 
-import settings
-
-engine = create_async_engine(
-    settings.db.url,
-    future=True,
-    pool_size=20,
-    pool_pre_ping=True,
-    pool_use_lifo=True,
-    echo=settings.db.echo,
-)
-async_sessionmaker = sessionmaker(
-    future=True,
-    class_=AsyncSession,
-    bind=engine,
-    expire_on_commit=False,
-)
 Base = declarative_base()
 Base.metadata.naming_convention = {
     "ix": "ix_%(column_0_label)s",

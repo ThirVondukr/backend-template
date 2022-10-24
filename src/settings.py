@@ -1,4 +1,16 @@
+import functools
+from typing import Type, TypeVar
+
 from pydantic import BaseSettings
+
+TSettings = TypeVar("TSettings", bound=BaseSettings)
+
+
+def get_settings(cls: Type[TSettings]) -> TSettings:
+    return cls()
+
+
+get_settings = functools.lru_cache(get_settings)  # Mypy moment
 
 
 class DatabaseSettings(BaseSettings):
@@ -6,20 +18,19 @@ class DatabaseSettings(BaseSettings):
         env_prefix = "database_"
 
     driver: str = "postgresql+asyncpg"
-    database: str = "database"
-    username: str = "postgres"
-    password: str = "password"
-    host: str = "postgres"
+    name: str
+    username: str
+    password: str
+    host: str
 
     echo: bool = False
 
     @property
     def url(self) -> str:
-        return f"{self.driver}://{self.username}:{self.password}@{self.host}/{self.database}"
+        return (
+            f"{self.driver}://{self.username}:{self.password}@{self.host}/{self.name}"
+        )
 
     @property
     def alembic_url(self) -> str:
         return self.url.replace("+asyncpg", "")
-
-
-db = DatabaseSettings()
