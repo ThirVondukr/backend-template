@@ -54,6 +54,10 @@ pytest:
     POSTGRES_PASSWORD: password
     POSTGRES_HOST_AUTH_METHOD: trust
     DATABASE_TEST_URL: postgresql+asyncpg://postgres:password@postgres/postgres
+    DATABASE_NAME: ""
+    DATABASE_HOST: ""
+    DATABASE_USERNAME: ""
+    DATABASE_PASSWORD: ""
 
   services:
     - postgres:14
