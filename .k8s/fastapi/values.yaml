@@ -1,0 +1,55 @@
+# Default values for fastapi.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+
+podAnnotations: {}
+
+podSecurityContext:
+   fsGroup: 2000
+
+securityContext:
+   capabilities:
+     drop:
+     - ALL
+#   readOnlyRootFilesystem: true
+   runAsNonRoot: true
+   runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+#  hosts:
+#    - host: ""
+#      paths:
+#        - path: /
+#          pathType: Prefix
+  tls: []
+
+resources:
+   requests:
+     cpu: 100m
+     memory: 128Mi
+   limits:
+     cpu: 1000m
+     memory: 256Mi
+
+databaseSecretName: "database-secret"

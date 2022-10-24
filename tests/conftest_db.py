@@ -7,7 +7,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 
 from alembic import command, config
-from db.base import async_sessionmaker
+from db.engine import async_sessionmaker
 
 
 @pytest.fixture(scope="session")

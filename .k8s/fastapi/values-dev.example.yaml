@@ -1,0 +1,18 @@
+replicaCount: 1
+image:
+  repository: "fastapi"
+  pullPolicy: Never
+  tag: ""
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: fastapi.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []

@@ -1,0 +1,26 @@
+app_name = "fastapi"
+namespace = "fastapi"
+allow_k8s_contexts(["minikube"])
+
+docker_build(
+    app_name,
+    context=".",
+    only=[
+        "src",
+        "pyproject.toml",
+        "pdm.lock",
+        "alembic.ini",
+    ],
+)
+
+yaml = helm(
+  ".k8s/{}".format(app_name),
+  name=app_name,
+  namespace=namespace,
+  values=[
+    ".k8s/{}/values.yaml".format(app_name),
+    ".k8s/{}/values-dev.yaml".format(app_name),
+  ],
+)
+
+k8s_yaml(yaml)
