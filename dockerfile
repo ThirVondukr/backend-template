@@ -19,4 +19,4 @@ RUN pip install --no-cache-dir -r requirements.txt --user
 
 COPY ./src ./src
 COPY alembic.ini ./
-ENTRYPOINT ["uvicorn", "app:create_app", "--factory", "--loop", "uvloop", "--host", "0.0.0.0"]
+ENTRYPOINT ["uvicorn", "api.app:create_app", "--factory", "--loop", "uvloop", "--host", "0.0.0.0"]

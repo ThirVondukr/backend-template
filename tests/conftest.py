@@ -17,7 +17,7 @@ pytest_plugins = [
 
 @pytest.fixture(scope="session")
 def fastapi_app() -> FastAPI:
-    from app import create_app
+    from api.app import create_app
 
     return create_app()
 

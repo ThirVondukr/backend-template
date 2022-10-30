@@ -1,4 +1,4 @@
-from schema import BaseDto
+from core.dto import BaseDto
 
 
 class BookCreateDto(BaseDto):

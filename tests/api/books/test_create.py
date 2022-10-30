@@ -4,7 +4,7 @@ import httpx
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from apps.books.services import BookService
+from core.books.services import BookService
 from db.models import Book
 
 

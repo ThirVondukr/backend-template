@@ -3,8 +3,8 @@ import uuid
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from apps.books.dto import BookCreateDto
-from apps.books.services import BookService
+from core.books.dto import BookCreateDto
+from core.books.services import BookService
 from db.models import Book
 
 

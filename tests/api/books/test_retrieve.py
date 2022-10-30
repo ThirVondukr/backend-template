@@ -3,8 +3,8 @@ import uuid
 import httpx
 from fastapi import status
 
-from apps.books.dto import BookCreateDto
-from apps.books.services import BookService
+from core.books.dto import BookCreateDto
+from core.books.services import BookService
 
 
 async def test_not_found(
