@@ -94,20 +94,20 @@ build-image:
     - dev
     - main
 
-deploy:
-  image: alpine/helm:3.10.2
-  stage: deploy
-  variables:
-    APP_NAME: "fastapi-cookiecutter"
-    NAMESPACE: "dev"
-  script:
-    - >
-      helm upgrade $APP_NAME ./.k8s/app
-      --install
-      --namespace $NAMESPACE
-      --set image.repository=$CI_REGISTRY_IMAGE,image.tag=$CI_COMMIT_SHORT_SHA
-      -f ./.k8s/app/values.yaml
-      -f ./.k8s/app/values-production.yaml
-  when: never
-  only:
-    - main
+#deploy:
+#  image: alpine/helm:3.10.2
+#  stage: deploy
+#  variables:
+#    APP_NAME: "fastapi-cookiecutter"
+#    NAMESPACE: "dev"
+#  script:
+#    - >
+#      helm upgrade $APP_NAME ./.k8s/app
+#      --install
+#      --namespace $NAMESPACE
+#      --set image.repository=$CI_REGISTRY_IMAGE,image.tag=$CI_COMMIT_SHORT_SHA
+#      -f ./.k8s/app/values.yaml
+#      -f ./.k8s/app/values-production.yaml
+#  when: manual
+#  only:
+#    - main
