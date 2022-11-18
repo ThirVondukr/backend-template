@@ -46,10 +46,9 @@ ingress:
 
 resources:
    requests:
-     cpu: 100m
+     cpu: 1000m
      memory: 128Mi
    limits:
-     cpu: 1000m
      memory: 256Mi
 
 databaseSecretName: "database-secret"
