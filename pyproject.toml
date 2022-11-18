@@ -17,7 +17,6 @@ dependencies = [
     "sqlalchemy>=1.4.42",
     "alembic>=1.8.1",
     "python-dotenv>=0.21.0",
-    "ruff>=0.0.126",
     "celery>=5.2.7",
     "redis>=4.3.4",
 ]
@@ -42,6 +41,7 @@ dev = [
     "sqlalchemy2-stubs>=0.0.2a29",
     "psycopg2-binary>=2.9.4",
     "pytest-asyncio>=0.20.1",
+    "ruff>=0.0.126",
 ]
 
 [tool.coverage.run]
