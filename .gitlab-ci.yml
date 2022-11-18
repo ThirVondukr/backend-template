@@ -3,6 +3,7 @@ image: docker
 stages:
   - lint
   - build
+  - deploy
 
 .lint-job: &lint_job
   image: python:3.10-slim
@@ -91,4 +92,22 @@ build-image:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
   only:
     - dev
+    - main
+
+deploy:
+  image: alpine/helm:3.10.2
+  stage: deploy
+  variables:
+    APP_NAME: "fastapi-cookiecutter"
+    NAMESPACE: "dev"
+  script:
+    - >
+      helm upgrade $APP_NAME ./.k8s/app
+      --install
+      --namespace $NAMESPACE
+      --set image.repository=$CI_REGISTRY_IMAGE,image.tag=$CI_COMMIT_SHORT_SHA
+      -f ./.k8s/app/values.yaml
+      -f ./.k8s/app/values-production.yaml
+  when: never
+  only:
     - main
