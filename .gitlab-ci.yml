@@ -3,7 +3,7 @@ image: docker
 stages:
   - lint
   - build
-  - deploy
+#  - deploy
 
 .lint-job: &lint_job
   image: python:3.10-slim
