@@ -1,7 +1,7 @@
 import functools
 from typing import TypeVar
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, RedisDsn
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
@@ -34,3 +34,11 @@ class DatabaseSettings(BaseSettings):
     @property
     def alembic_url(self) -> str:
         return self.url.replace("+asyncpg", "")
+
+
+class CelerySettings(BaseSettings):
+    broker_url: RedisDsn
+    backend_url: RedisDsn
+
+    class Config:
+        env_prefix = "celery_"

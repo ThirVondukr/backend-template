@@ -4,15 +4,22 @@ image:
   pullPolicy: Never
   tag: ""
 
+# We don't want to run migrations automatically in most cases during development
+migrationsEnable: false
+commonEnvFrom:
+  - secretRef:
+      name: database-secret
+    prefix: database_
+
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations: { }
   hosts:
     - host: fastapi.localhost
       paths:
         - path: /
           pathType: Prefix
+          serviceName: fastapi
+          servicePortName: http
   tls: []

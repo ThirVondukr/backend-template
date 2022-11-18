@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "application.fullname" . }}
+  name: {{ include "app.fullname" . }}
   labels:
     {{- include "api.labels" . | nindent 4 }}
 spec:
@@ -18,10 +18,8 @@ spec:
       labels:
         {{- include "api.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -32,8 +30,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["--port", "8000"]
           envFrom:
-            - secretRef:
-                name: {{ .Values.databaseSecretName }}
+            {{ .Values.commonEnvFrom | toYaml | nindent 12 }}
           ports:
             - name: http
               containerPort: 8000

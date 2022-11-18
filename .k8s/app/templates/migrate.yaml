@@ -1,7 +1,8 @@
+{{- if .Values.migrationsEnable -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "application.fullname" . }}-migrate
+  name: {{ include "app.fullname" . }}-migrate
   labels:
     {{- include "migrations.labels" . | nindent 4}}
   annotations:
@@ -29,7 +30,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["alembic", "upgrade", "head"]
           envFrom:
-            - secretRef:
-                name: {{ .Values.databaseSecretName }}
+            {{ .Values.commonEnvFrom | toYaml | nindent 12}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+{{- end -}}

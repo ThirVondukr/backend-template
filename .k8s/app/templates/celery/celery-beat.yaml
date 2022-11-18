@@ -1,0 +1,43 @@
+{{- if .Values.celery.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}-celery-beat
+  labels:
+    {{- include "celery-beat.labels" . | nindent 4 }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "celery-beat.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "celery-beat.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "app.fullname" . }}-celery-beat
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy}}
+          command:
+            - celery
+            - --app
+            - {{ .Values.celery.entrypoint }}
+            - beat
+            - -l
+            - INFO
+          envFrom:
+            {{ .Values.commonEnvFrom | toYaml | nindent 12 }}
+            {{- if .Values.celery.redisConfigMap }}
+            - configMapRef:
+                name: {{ include "celery.redisConfigMapName" . }}
+              prefix: celery_
+            {{- end }}
+          resources:
+            {{- toYaml .Values.celery.beat.resources | nindent 12 }}
+{{- end -}}
