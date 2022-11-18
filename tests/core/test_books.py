@@ -8,6 +8,8 @@ from core.books.exceptions import BookAlreadyExistsError
 from core.books.services import BookService
 from db.models import Book
 
+pytestmark = [pytest.mark.anyio]
+
 
 async def test_create(
     session: AsyncSession,

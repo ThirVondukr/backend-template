@@ -1,7 +1,10 @@
+import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.models import Book
+
+pytestmark = [pytest.mark.anyio]
 
 
 async def test_books_db(session: AsyncSession) -> None:

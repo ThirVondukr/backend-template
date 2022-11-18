@@ -40,8 +40,8 @@ dev = [
     "pytest-xdist>=2.5.0",
     "sqlalchemy2-stubs>=0.0.2a29",
     "psycopg2-binary>=2.9.4",
-    "pytest-asyncio>=0.20.1",
     "ruff>=0.0.126",
+    "anyio>=3.6.2",
 ]
 
 [tool.coverage.run]
@@ -49,9 +49,6 @@ source = ["src"]
 omit = ["src/alembic/*"]
 command_line = "-m pytest -v"
 concurrency = ["greenlet"]
-
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
 
 [tool.coverage.report]
 exclude_lines = [

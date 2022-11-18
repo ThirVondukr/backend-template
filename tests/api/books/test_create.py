@@ -1,11 +1,14 @@
 import uuid
 
 import httpx
+import pytest
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.books.services import BookService
 from db.models import Book
+
+pytestmark = [pytest.mark.anyio]
 
 
 async def test_base_case(

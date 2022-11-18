@@ -1,10 +1,13 @@
 import uuid
 
 import httpx
+import pytest
 from fastapi import status
 
 from core.books.dto import BookCreateDto
 from core.books.services import BookService
+
+pytestmark = [pytest.mark.anyio]
 
 
 async def test_not_found(

@@ -331,15 +331,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pytest-asyncio"
-version = "0.20.2"
-requires_python = ">=3.7"
-summary = "Pytest support for asyncio"
-dependencies = [
-    "pytest>=6.1.0",
-]
-
-[[package]]
 name = "pytest-xdist"
 version = "3.0.2"
 requires_python = ">=3.6"
@@ -487,7 +478,7 @@ summary = "Module for decorators, wrappers and monkey patching."
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:f249c4a3268375319af06aeab6b58e3eaa69f7021cdde296b2e32b363b068e09"
+content_hash = "sha256:b8a5dcedca8dcd13616ffb72a23e3778909023e166f63274432d4f0f75d571f7"
 
 [metadata.files]
 "alembic 1.8.1" = [
@@ -981,10 +972,6 @@ content_hash = "sha256:f249c4a3268375319af06aeab6b58e3eaa69f7021cdde296b2e32b363
 "pytest 7.2.0" = [
     {url = "https://files.pythonhosted.org/packages/0b/21/055f39bf8861580b43f845f9e8270c7786fe629b2f8562ff09007132e2e7/pytest-7.2.0.tar.gz", hash = "sha256:c4014eb40e10f11f355ad4e3c2fb2c6c6d1919c73f3b5a433de4708202cade59"},
     {url = "https://files.pythonhosted.org/packages/67/68/a5eb36c3a8540594b6035e6cdae40c1ef1b6a2bfacbecc3d1a544583c078/pytest-7.2.0-py3-none-any.whl", hash = "sha256:892f933d339f068883b6fd5a459f03d85bfcb355e4981e146d2c7616c21fef71"},
-]
-"pytest-asyncio 0.20.2" = [
-    {url = "https://files.pythonhosted.org/packages/65/57/fb0d22ee0d9cd8d8b277cdf4fd7efa3e245c9577d2c2d54c6c2c18b535a2/pytest_asyncio-0.20.2-py3-none-any.whl", hash = "sha256:07e0abf9e6e6b95894a39f688a4a875d63c2128f76c02d03d16ccbc35bcc0f8a"},
-    {url = "https://files.pythonhosted.org/packages/eb/db/479f1c43df26c42c9797dfc866dc98bcf28d3765ae49bf2da681ab344b72/pytest-asyncio-0.20.2.tar.gz", hash = "sha256:32a87a9836298a881c0ec637ebcc952cfe23a56436bdc0d09d1511941dd8a812"},
 ]
 "pytest-xdist 3.0.2" = [
     {url = "https://files.pythonhosted.org/packages/0b/74/3ba11ebecb6f3f69a472a3c19be65c46a1dd3efaa580d973118455c74c34/pytest-xdist-3.0.2.tar.gz", hash = "sha256:688da9b814370e891ba5de650c9327d1a9d861721a524eb917e620eec3e90291"},
