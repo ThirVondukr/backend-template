@@ -1,2 +1,2 @@
-class BookAlreadyExists(Exception):
+class BookAlreadyExistsError(Exception):
     pass

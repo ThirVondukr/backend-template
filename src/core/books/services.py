@@ -6,7 +6,7 @@ from db.dependencies import get_session
 from db.models import Book
 
 from .dto import BookCreateDto
-from .exceptions import BookAlreadyExists
+from .exceptions import BookAlreadyExistsError
 
 
 class BookService:
@@ -22,7 +22,7 @@ class BookService:
 
     async def create(self, dto: BookCreateDto) -> Book:
         if await self._session.scalar(select(Book).where(Book.title == dto.title)):
-            raise BookAlreadyExists
+            raise BookAlreadyExistsError
 
         book = Book(**dto.dict())
         self._session.add(book)

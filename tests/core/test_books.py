@@ -4,7 +4,7 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.books.dto import BookCreateDto
-from core.books.exceptions import BookAlreadyExists
+from core.books.exceptions import BookAlreadyExistsError
 from core.books.services import BookService
 from db.models import Book
 
@@ -22,7 +22,7 @@ async def test_create_duplicate_title(
     book_service: BookService,
 ) -> None:
 
-    with pytest.raises(BookAlreadyExists):
+    with pytest.raises(BookAlreadyExistsError):
         await book_service.create(dto=BookCreateDto(title=book.title))
 
 

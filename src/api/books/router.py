@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from core.books.dto import BookCreateDto
-from core.books.exceptions import BookAlreadyExists
+from core.books.exceptions import BookAlreadyExistsError
 from core.books.services import BookService
 
 from .schema import BookCreateSchema, BookSchema
@@ -25,7 +25,7 @@ async def books_create(
 ) -> BookSchema:
     try:
         book = await book_service.create(dto=BookCreateDto.from_orm(schema))
-    except BookAlreadyExists as e:
+    except BookAlreadyExistsError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST) from e
 
     return BookSchema.from_orm(book)

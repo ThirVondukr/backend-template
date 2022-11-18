@@ -44,10 +44,10 @@ isort:
   script:
     - pdm run isort . --check
 
-flake8:
+ruff:
   <<: *lint_job
   script:
-    - pdm run flake8
+    - pdm run ruff .
 
 pytest:
   <<: *lint_job

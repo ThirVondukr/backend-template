@@ -1,12 +1,12 @@
 import functools
-from typing import Type, TypeVar
+from typing import TypeVar
 
 from pydantic import BaseSettings
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
 
-def get_settings(cls: Type[TSettings]) -> TSettings:
+def get_settings(cls: type[TSettings]) -> TSettings:
     return cls()
 
 
