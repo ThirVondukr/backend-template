@@ -41,7 +41,7 @@ def alembic_config() -> config.Config:
 
 @pytest.fixture(scope="session")
 async def run_migrations(
-    create_database: None,
+    create_database: None,  # noqa: ARG001
     engine: AsyncEngine,
     alembic_config: config.Config,
     database_url: str,
@@ -68,7 +68,7 @@ def engine(database_url: str) -> AsyncEngine:
 
 @pytest.fixture(autouse=True)
 async def session(
-    run_migrations: None,
+    run_migrations: None,  # noqa: ARG001
     engine: AsyncEngine,
 ) -> AsyncGenerator[AsyncSession, None]:
     async with engine.connect() as conn:

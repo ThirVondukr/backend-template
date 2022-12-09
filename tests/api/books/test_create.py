@@ -5,7 +5,6 @@ import pytest
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.books.services import BookService
 from db.models import Book
 
 pytestmark = [pytest.mark.anyio]
@@ -14,7 +13,6 @@ pytestmark = [pytest.mark.anyio]
 async def test_base_case(
     http_client: httpx.AsyncClient,
     session: AsyncSession,
-    book_service: BookService,
 ) -> None:
     title = str(uuid.uuid4())
     response = await http_client.post(url="/books", json={"title": title})
@@ -26,7 +24,6 @@ async def test_base_case(
 
 async def test_duplicate_title(
     http_client: httpx.AsyncClient,
-    session: AsyncSession,
     book: Book,
 ) -> None:
     response = await http_client.post(url="/books", json={"title": book.title})
