@@ -96,7 +96,7 @@ select = [
     "E",
     "W",
     "C90",
-    # "I",  # isort
+    "I",  # isort
     "UP",
     "N",
     "YTT",
@@ -120,6 +120,7 @@ select = [
     "PLW",
     "RUF100"
 ]
+src = ["src", "tests"]
 ignore = [
     "E501", # Line Length
     "A003", # Class attribute ... is shadowing a python builtin
