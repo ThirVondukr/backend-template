@@ -140,3 +140,6 @@ extend-immutable-calls = ["fastapi.Depends"]
 [tool.ruff.pep8-naming]
 classmethod-decorators = ["classmethod", "pydantic.validator"]
 staticmethod-decorators = ["staticmethod"]
+
+[tool.pdm.scripts]
+lint = {composite = ["black .", "isort .", "ruff .", "mypy ."]}
