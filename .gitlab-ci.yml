@@ -106,9 +106,6 @@ build-image:
   only:
     - dev
     - main
-  tags:
-    - docker
-    - build
 
 #deploy:
 #  image: alpine/helm:3.10.2
