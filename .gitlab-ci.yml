@@ -16,6 +16,10 @@ stages:
       paths:
         - .venv
         - .cache/pip
+    - key: $CI_COMMIT_REF_SLUG
+      paths:
+        - .ruff_cache
+        - .mypy_cache
   only:
     changes:
       - "**/*.py"
@@ -83,16 +87,28 @@ build-image:
 
   variables:
     DOCKER_TLS_CERTDIR: ""
+    RUNTIME_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    BRANCH_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    BUILD_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH-build
 
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    - docker pull $BUILD_IMAGE || true
+    - docker pull $BRANCH_IMAGE || true
+
+    - docker build --cache-from $BUILD_IMAGE --tag $BUILD_IMAGE --target build .
+    - docker build --cache-from $BUILD_IMAGE --cache-from $BRANCH_IMAGE --tag $RUNTIME_IMAGE .
+
+    - docker tag $RUNTIME_IMAGE $BRANCH_IMAGE
+    - docker push $BUILD_IMAGE
+    - docker push $RUNTIME_IMAGE
+    - docker push $BRANCH_IMAGE
   only:
     - dev
     - main
+  tags:
+    - docker
+    - build
 
 #deploy:
 #  image: alpine/helm:3.10.2
