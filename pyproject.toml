@@ -44,6 +44,9 @@ dev = [
     "anyio>=3.6.2",
 ]
 
+[tool.pytest.ini_options]
+pythonpath = "src"
+
 [tool.coverage.run]
 source = ["src"]
 omit = ["src/alembic/*"]

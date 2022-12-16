@@ -68,7 +68,6 @@ pytest:
     - postgres:14
 
   script:
-    - export PYTHONPATH=$PYTHONPATH:./src
     - pdm run coverage run
     - pdm run coverage report -m
     - pdm run coverage xml

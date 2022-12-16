@@ -1,4 +1,4 @@
-from typing import AsyncIterable
+from collections.abc import AsyncIterator
 
 import dotenv
 import httpx
@@ -8,8 +8,8 @@ from fastapi import FastAPI
 dotenv.load_dotenv(".env")
 pytest_plugins = [
     "anyio",
-    "conftest_db",
-    "conftest_services",
+    "tests.conftest_db",
+    "tests.conftest_services",
 ]
 
 
@@ -26,7 +26,7 @@ def fastapi_app() -> FastAPI:
 
 
 @pytest.fixture
-async def http_client(fastapi_app: FastAPI) -> AsyncIterable[httpx.AsyncClient]:
+async def http_client(fastapi_app: FastAPI) -> AsyncIterator[httpx.AsyncClient]:
     async with httpx.AsyncClient(
         app=fastapi_app,
         base_url="http://test",
