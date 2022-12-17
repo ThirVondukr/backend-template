@@ -146,3 +146,4 @@ staticmethod-decorators = ["staticmethod"]
 
 [tool.pdm.scripts]
 lint = {composite = ["black .", "isort .", "ruff .", "mypy ."]}
+test = {composite = ["coverage run", "coverage report"]}
