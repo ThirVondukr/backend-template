@@ -42,6 +42,7 @@ dev = [
     "psycopg2-binary>=2.9.4",
     "ruff>=0.0.126",
     "anyio>=3.6.2",
+    "radon>=5.1.0",
 ]
 
 [tool.pytest.ini_options]
@@ -99,7 +100,8 @@ select = [
     "E",
     "W",
     "C90",
-    "I",  # isort
+#    "I",  # isort
+#    "D",  # pydocstyle
     "UP",
     "N",
     "YTT",
@@ -111,11 +113,14 @@ select = [
     "A",
     "C4",
     "T10",
+    "EM",
     "T20",
     "Q",
     "RET",
+    "SIM",
     "ARG",
-    #"ERA",
+    "DTZ",
+#    "ERA",
     "PGH",
     "PLC",
     "PLE",
@@ -145,5 +150,14 @@ classmethod-decorators = ["classmethod", "pydantic.validator"]
 staticmethod-decorators = ["staticmethod"]
 
 [tool.pdm.scripts]
-lint = {composite = ["black .", "isort .", "ruff .", "mypy ."]}
-test = {composite = ["coverage run", "coverage report"]}
+lint = {composite = [
+    "black .",
+    "isort .",
+    "ruff .",
+    "mypy .",
+]}
+test = {composite = [
+    "coverage run",
+    "coverage report",
+]}
+
