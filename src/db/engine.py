@@ -1,10 +1,10 @@
-from sqlalchemy.ext import asyncio
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from settings import DatabaseSettings, get_settings
 
 _settings = get_settings(DatabaseSettings)
 
-engine = asyncio.create_async_engine(
+engine = create_async_engine(
     _settings.url,
     future=True,
     pool_size=20,
@@ -12,7 +12,7 @@ engine = asyncio.create_async_engine(
     pool_use_lifo=True,
     echo=_settings.echo,
 )
-async_sessionmaker = asyncio.async_sessionmaker(
+async_sessionmaker = async_sessionmaker(
     future=True,
     bind=engine,
     expire_on_commit=False,
