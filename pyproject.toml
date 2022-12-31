@@ -17,8 +17,7 @@ dependencies = [
     "sqlalchemy>=1.4.42",
     "alembic>=1.8.1",
     "python-dotenv>=0.21.0",
-    "celery>=5.2.7",
-    "redis>=4.3.4",
+    "anyio>=3.6.2",
 ]
 [project.optional-dependencies]
 
@@ -39,10 +38,10 @@ dev = [
     "sqlalchemy-utils>=0.38.3",
     "pytest-xdist>=2.5.0",
     "sqlalchemy2-stubs>=0.0.2a29",
-    "psycopg2-binary>=2.9.4",
     "ruff>=0.0.126",
     "anyio>=3.6.2",
     "radon>=5.1.0",
+    "psycopg2-binary>=2.9.5",
 ]
 
 [tool.pytest.ini_options]
@@ -95,45 +94,19 @@ profile = "black"
 
 
 [tool.ruff]
-select = [
-    "F",
-    "E",
-    "W",
-    "C90",
-#    "I",  # isort
-#    "D",  # pydocstyle
-    "UP",
-    "N",
-    "YTT",
-    "ANN",
-    "S",
-    "BLE",
-    "FBT",
-    "B",
-    "A",
-    "C4",
-    "T10",
-    "EM",
-    "T20",
-    "Q",
-    "RET",
-    "SIM",
-    "ARG",
-    "DTZ",
-#    "ERA",
-    "PGH",
-    "PLC",
-    "PLE",
-    "PLR",
-    "PLW",
-    "RUF100"
-]
 src = ["src", "tests"]
+select = ["ALL"]
 ignore = [
     "E501", # Line Length
     "A003", # Class attribute ... is shadowing a python builtin
     "ANN101",
     "ANN102",
+    "D", # pydocstyle
+    "PD",  # pandas-vet
+    "I",  # Isort
+    "RUF001",
+    "RUF002",
+    "RUF003",
 ]
 
 [tool.ruff.per-file-ignores]
