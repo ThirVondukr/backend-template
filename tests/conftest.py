@@ -8,8 +8,8 @@ from fastapi import FastAPI
 dotenv.load_dotenv(".env")
 pytest_plugins = [
     "anyio",
-    "tests.conftest_db",
-    "tests.conftest_services",
+    "tests.plugins.database",
+    "tests.plugins.services",
 ]
 
 
