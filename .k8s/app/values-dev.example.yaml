@@ -1,20 +1,12 @@
-replicaCount: 1
 image:
   repository: "fastapi"
   pullPolicy: Never
   tag: ""
 
-# We don't want to run migrations automatically in most cases during development
-migrationsEnable: false
-commonEnvFrom:
-  - secretRef:
-      name: database-secret
-    prefix: database_
-
 ingress:
   enabled: true
   className: "nginx"
-  annotations: { }
+  annotations: {}
   hosts:
     - host: fastapi.localhost
       paths:
@@ -23,3 +15,18 @@ ingress:
           serviceName: fastapi
           servicePortName: http
   tls: []
+
+commonEnvFrom:
+  - secretRef:
+      name: database-secret
+    prefix: database_
+
+api:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 250m
+
+# We don't want to run migrations automatically in most cases during development
+migrations:
+  enabled: false

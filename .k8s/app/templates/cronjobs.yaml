@@ -1,0 +1,46 @@
+{{ $fullname := include "app.fullname" . }}
+{{ $labels := include "cronjob.labels" . }}
+{{ $selectorLabels := include "cronjob.selectorLabels" . }}
+
+{{ range $jobName, $job := .Values.cronjobs.tasks }}
+{{- if semverCompare ">=1.21-0" $.Capabilities.KubeVersion.GitVersion -}}
+apiVersion: batch/v1
+{{- else -}}
+apiVersion: batch/v1beta1
+{{- end }}
+kind: CronJob
+
+metadata:
+  name: {{ $fullname }}-cronjob-{{ $jobName }}
+  labels:
+    {{- $labels | nindent 4 }}
+    cronjob-name: {{ $jobName }}
+
+spec:
+  schedule: {{ $job.schedule | quote}}
+  suspend: {{ default false $job.suspended }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- $selectorLabels | nindent 12 }}
+            cronjob-name: {{ $jobName }}
+        spec:
+          restartPolicy: OnFailure
+          imagePullSecrets:
+            {{- $.Values.imagePullSecrets | toYaml | nindent 12 }}
+          containers:
+            - name: "{{ $fullname }}-{{ $jobName }}"
+              image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+              imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              command:
+                {{- $job.entrypoint | toYaml | nindent 16 }}
+              resources:
+                {{ toYaml $.Values.cronjobs.resources | nindent 16 }}
+              envFrom:
+                {{ $.Values.commonEnvFrom | toYaml  | nindent 16 }}
+---
+{{ end }}

@@ -1,9 +1,0 @@
-{{- if and .Values.celery.enabled .Values.celery.redisConfigMap -}}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "celery.redisConfigMapName" . }}
-data:
-  BROKER_URL: "redis://{{ include "app.fullname" . }}-redis:6379/0"
-  BACKEND_URL: "redis://{{ include "app.fullname" . }}-redis:6379/0"
-{{- end -}}

@@ -1,4 +1,4 @@
-{{- if .Values.migrationsEnable -}}
+{{- if .Values.migrations.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -28,9 +28,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["alembic", "upgrade", "head"]
+          command: {{ .Values.migrations.command }}
           envFrom:
             {{ .Values.commonEnvFrom | toYaml | nindent 12}}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.migrations.resources | nindent 12 }}
 {{- end -}}

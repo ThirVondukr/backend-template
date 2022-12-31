@@ -1,5 +1,3 @@
-replicaCount: 3
-
 image:
   repository: ""
   pullPolicy: IfNotPresent
@@ -7,14 +5,7 @@ image:
 
 nameOverride: ""
 fullnameOverride: ""
-
-imagePullSecrets: []
-
-migrationsEnable: true
-commonEnvFrom: []
-
-
-podAnnotations: { }
+podAnnotations: {}
 
 podSecurityContext:
   fsGroup: 2000
@@ -34,50 +25,47 @@ service:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: { }
+  annotations: {}
   hosts: []
-  #  hosts:
-  #    - host: ""
-  #      paths:
-  #        - path: /
-  #          pathType: Prefix
+#    - host: fastapi.localhost
+#      paths:
+#        - path: /
+#          pathType: Prefix
+#          serviceName: fastapi
+#          servicePortName: http
   tls: []
 
-resources:
-  requests:
-    cpu: 1000m
-    memory: 128Mi
-  limits:
-    memory: 256Mi
-
-redis:
+migrations:
   enabled: true
-  image: redis:7
+  command: ["alembic", "upgrade", "head"]
+  resources: {}
+
+api:
+  enabled: true
+  args: ["--port", "8000"]
+  replicaCount: 3
   resources:
     requests:
-      memory: 64Mi
-      cpu: 250m
+      cpu: 1000m
+      memory: 128Mi
     limits:
       memory: 256Mi
 
-celery:
-  enabled: true
-  redisConfigMap: true
-  envFrom: []
-  entrypoint: tasks.__main__.app
-  beat:
-    resources:
-      requests:
-        cpu: 1000m
-        memory: 128Mi
-      limits:
-        memory: 256Mi
-  worker:
-    replicas: 1
-    concurrency: 1
-    resources:
-      requests:
-        cpu: 1000m
-        memory: 128Mi
-      limits:
-        memory: 256Mi
+cronjobs:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  tasks: []
+#    task-name:
+#      schedule: "* * * * *"
+#      entrypoint: ["python", "-m", "package.module"]
+#    task-name1:
+#      schedule: "* * * * *"
+#      suspended: true
+#      entrypoint: ["python", "-m", "package.module"]
+
+commonEnvFrom: []
+imagePullSecrets: []

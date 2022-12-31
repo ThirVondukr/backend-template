@@ -1,3 +1,4 @@
+{{- if .Values.api.enabled  -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,16 +6,14 @@ metadata:
   labels:
     {{- include "api.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.api.replicaCount }}
   selector:
     matchLabels:
       {{- include "api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- .Values.podAnnotations | toYaml | nindent 8 }}
       labels:
         {{- include "api.selectorLabels" . | nindent 8 }}
     spec:
@@ -28,9 +27,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: ["--port", "8000"]
+          args:
+            {{- .Values.api.args | toYaml | nindent 12 }}
           envFrom:
-            {{ .Values.commonEnvFrom | toYaml | nindent 12 }}
+            {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
           ports:
             - name: http
               containerPort: 8000
@@ -44,4 +44,5 @@ spec:
               path: /health
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.api.resources | nindent 12 }}
+{{- end -}}

@@ -6,7 +6,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{- define "common.selectorLabels" }}
-app.kubernetes.io/part-of: {{ include "application.name" . }}
+app.kubernetes.io/name: {{ include "application.name" . }}
 {{- end }}
 
 
@@ -20,6 +20,7 @@ app.kubernetes.io/component: api
 app.kubernetes.io/component: api
 {{- end }}
 
+
 {{- define "migrations.labels" }}
 {{ include "common.labels" . }}
 app.kubernetes.io/component: migrations
@@ -28,4 +29,15 @@ app.kubernetes.io/component: migrations
 {{- define "migrations.selectorLabels" }}
 {{- include "common.selectorLabels" . }}
 app.kubernetes.io/component: migrations
+{{- end }}
+
+
+{{- define "cronjob.labels" }}
+{{ include "common.labels" . }}
+app.kubernetes.io/component: cronjob
+{{- end }}
+
+{{- define "cronjob.selectorLabels" }}
+{{- include "common.selectorLabels" . }}
+app.kubernetes.io/component: cronjob
 {{- end }}
