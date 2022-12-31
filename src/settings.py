@@ -1,5 +1,6 @@
 import functools
 from typing import TypeVar
+from urllib.parse import quote_plus
 
 from pydantic import BaseSettings, RedisDsn
 
@@ -27,13 +28,8 @@ class DatabaseSettings(BaseSettings):
 
     @property
     def url(self) -> str:
-        return (
-            f"{self.driver}://{self.username}:{self.password}@{self.host}/{self.name}"
-        )
-
-    @property
-    def alembic_url(self) -> str:
-        return self.url.replace("+asyncpg", "")
+        password = quote_plus(self.password)
+        return f"{self.driver}://{self.username}:{password}@{self.host}/{self.name}"
 
 
 class CelerySettings(BaseSettings):

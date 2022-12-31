@@ -9,7 +9,7 @@ class CommitSessionMiddleware:
         self.app = app
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] != "http":
+        if scope["type"] != "http":  # pragma: no cover
             await self.app(scope, receive, send)
             return
 
