@@ -26,7 +26,7 @@ def sync_database_url(database_url: str) -> str:
 
 
 @pytest.fixture(scope="session")
-def create_database(sync_database_url: str) -> Iterable[None]:
+def _create_database(sync_database_url: str) -> Iterable[None]:
     if not sqlalchemy_utils.database_exists(sync_database_url):
         sqlalchemy_utils.create_database(sync_database_url)
 
@@ -40,8 +40,8 @@ def alembic_config() -> config.Config:
 
 
 @pytest.fixture(scope="session")
-async def run_migrations(
-    create_database: None,  # noqa: ARG001
+async def _run_migrations(
+    _create_database: None,
     engine: AsyncEngine,
     alembic_config: config.Config,
     database_url: str,
@@ -68,7 +68,7 @@ def engine(database_url: str) -> AsyncEngine:
 
 @pytest.fixture(autouse=True)
 async def session(
-    run_migrations: None,  # noqa: ARG001
+    _run_migrations: None,
     engine: AsyncEngine,
 ) -> AsyncGenerator[AsyncSession, None]:
     async with engine.connect() as conn:

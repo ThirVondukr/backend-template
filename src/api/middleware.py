@@ -17,11 +17,12 @@ class CommitSessionMiddleware:
             if message["type"] != "http.response.start":
                 await send(message)
                 return
-            if "state" in scope and (
-                session := scope["state"].get("sqlalchemy_session")
+            if (
+                "state" in scope
+                and (session := scope["state"].get("sqlalchemy_session"))
+                and session.is_active
             ):
-                if session.is_active:
-                    await session.commit()
+                await session.commit()
             await send(message)
 
         await self.app(scope, receive, _inner)

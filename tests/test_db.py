@@ -8,8 +8,9 @@ pytestmark = [pytest.mark.anyio]
 
 
 async def test_books_db(session: AsyncSession) -> None:
-    session.add_all([Book(title=f"{i}") for i in range(10)])
+    book_count = 10
+    session.add_all([Book(title=f"{i}") for i in range(book_count)])
     await session.flush()
 
     books = (await session.scalars(select(Book))).all()
-    assert len(books) == 10
+    assert len(books) == book_count
