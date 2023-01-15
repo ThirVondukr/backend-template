@@ -15,38 +15,3 @@ services:
 #    build: .
 #    entrypoint: ["alembic", "upgrade", "head"]
 #    env_file: .env
-
-  redis:
-    image: redis:7
-
-  celery:
-    build:
-      context: .
-      dockerfile: dockerfile
-    entrypoint:
-      - celery
-      - --app
-      - tasks.__main__.app
-      - worker
-      - --concurrency
-      - "1"
-      - -l
-      - INFO
-    env_file: .env
-    environment: &celery-env
-      CELERY_BROKER_URL: "redis://redis:6379/0"
-      CELERY_BACKEND_URL: "redis://redis:6379/0"
-
-  celery-beat:
-    build:
-      context: .
-      dockerfile: dockerfile
-    entrypoint:
-      - celery
-      - --app
-      - tasks.__main__.app
-      - beat
-      - -l
-      - INFO
-    env_file: .env
-    environment: *celery-env
