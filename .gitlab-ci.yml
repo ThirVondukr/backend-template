@@ -6,7 +6,7 @@ stages:
 #  - deploy
 
 .lint-job: &lint_job
-  image: python:3.10-slim
+  image: python:3.11-slim
   stage: lint
   interruptible: true
   cache:
