@@ -104,6 +104,7 @@ ignore = [
     "D", # pydocstyle
     "PD",  # pandas-vet
     "I",  # Isort
+    "INP",
     "RUF001",
     "RUF002",
     "RUF003",
