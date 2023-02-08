@@ -49,9 +49,9 @@ def database_url() -> str:
 
 
 @pytest.fixture(scope="session")
-def async_sessionmaker() -> sqlalchemy.ext.asyncio.async_sessionmaker[
-    sqlalchemy.ext.asyncio.AsyncSession
-]:
+def async_sessionmaker() -> (
+    sqlalchemy.ext.asyncio.async_sessionmaker[sqlalchemy.ext.asyncio.AsyncSession]
+):
     import db.engine
 
     return db.engine.async_sessionmaker

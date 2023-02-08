@@ -23,7 +23,6 @@ async def test_create_duplicate_title(
     book: Book,
     book_service: BookService,
 ) -> None:
-
     with pytest.raises(BookAlreadyExistsError):
         await book_service.create(dto=BookCreateDto(title=book.title))
 
