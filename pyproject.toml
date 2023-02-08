@@ -19,6 +19,7 @@ dependencies = [
     "python-dotenv>=0.21.0",
     "anyio>=3.6.2",
     "orjson>=3.8.5",
+    "sentry-sdk>=1.15.0",
 ]
 [project.optional-dependencies]
 

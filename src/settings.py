@@ -2,7 +2,7 @@ import functools
 from typing import TypeVar
 from urllib.parse import quote_plus
 
-from pydantic import BaseSettings, RedisDsn
+from pydantic import BaseSettings, Field
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
@@ -32,9 +32,10 @@ class DatabaseSettings(BaseSettings):
         return f"{self.driver}://{self.username}:{password}@{self.host}/{self.name}"
 
 
-class CelerySettings(BaseSettings):
-    broker_url: RedisDsn
-    backend_url: RedisDsn
-
+class SentrySettings(BaseSettings):
     class Config:
-        env_prefix = "celery_"
+        env_prefix = "sentry_"
+
+    dsn: str = ""
+    environment: str = "production"
+    traces_sample_rate: float = Field(default=1.0, ge=0.0, le=1.0)
