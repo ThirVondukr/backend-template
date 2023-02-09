@@ -50,7 +50,7 @@ pythonpath = "src"
 source = ["src"]
 omit = ["src/alembic/*"]
 command_line = "-m pytest -v"
-concurrency = ["greenlet"]
+concurrency = ["greenlet", "thread"]
 
 [tool.coverage.report]
 exclude_lines = [
