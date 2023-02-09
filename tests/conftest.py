@@ -1,18 +1,15 @@
-import os
 from collections.abc import AsyncIterator
 
 import dotenv
 import httpx
 import pytest
-import sqlalchemy.ext.asyncio
 from fastapi import FastAPI
-
-from alembic import config
 
 dotenv.load_dotenv(".env")
 pytest_plugins = [
     "anyio",
     "tests.plugins.services",
+    "tests.plugins.database",
     "sqlalchemy_pytest.database",
 ]
 
@@ -41,22 +38,3 @@ async def http_client(fastapi_app: FastAPI) -> AsyncIterator[httpx.AsyncClient]:
 @pytest.fixture(scope="session")
 def worker_id() -> str:
     return "main"
-
-
-@pytest.fixture(scope="session")
-def database_url() -> str:
-    return os.environ["DATABASE_TEST_URL"]
-
-
-@pytest.fixture(scope="session")
-def async_sessionmaker() -> (
-    sqlalchemy.ext.asyncio.async_sessionmaker[sqlalchemy.ext.asyncio.AsyncSession]
-):
-    import db.engine
-
-    return db.engine.async_sessionmaker
-
-
-@pytest.fixture(scope="session")
-def alembic_config() -> config.Config | None:
-    return config.Config("alembic.ini")
