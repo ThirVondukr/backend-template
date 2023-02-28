@@ -2,12 +2,14 @@ import functools
 from typing import TypeVar
 from urllib.parse import quote_plus
 
+import dotenv
 from pydantic import BaseSettings, Field
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
 
 def get_settings(cls: type[TSettings]) -> TSettings:
+    dotenv.load_dotenv()
     return cls()
 
 

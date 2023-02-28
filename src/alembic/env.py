@@ -1,16 +1,11 @@
-# flake8: noqa E402
 import asyncio
-
-import dotenv
-
-dotenv.load_dotenv(".env")
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connectable, Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-import db.models  # noqa
+import db.models  # noqa: F401
 from alembic import context
 from db import Base
 from settings import DatabaseSettings, get_settings
@@ -73,7 +68,7 @@ async def do_run_migrations_async(connectable: Connectable) -> None:
         await conn.run_sync(do_run_migrations)
 
 
-def run_migrations():
+def run_migrations() -> None:
     connectable = context.config.attributes.get("connection")
     if not connectable:
         connectable = AsyncEngine(
@@ -81,7 +76,7 @@ def run_migrations():
                 config.get_section(config.config_ini_section),
                 poolclass=pool.NullPool,
                 future=True,
-            )
+            ),
         )
     if isinstance(connectable, AsyncEngine):
         asyncio.run(do_run_migrations_async(connectable))
