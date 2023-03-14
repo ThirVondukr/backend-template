@@ -1,15 +1,17 @@
 import asyncio
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connectable, Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 import db.models  # noqa: F401
-from alembic import context
+import sentry
 from db import Base
 from settings import DatabaseSettings, get_settings
 
+sentry.init_sentry()
 config = context.config
 
 if config.config_file_name is not None:
