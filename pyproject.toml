@@ -93,6 +93,15 @@ profile = "black"
 
 [tool.ruff]
 src = ["src", "tests"]
+fixable = [
+    "F",
+    "E",
+    "W",
+    "I",
+    "COM",
+    "UP",
+    "RUF",
+]
 select = ["ALL"]
 ignore = [
     "E501", # Line Length
@@ -142,7 +151,6 @@ staticmethod-decorators = ["staticmethod"]
 [tool.pdm.scripts]
 lint = {composite = [
     "black .",
-    "isort .",
     "ruff .",
     "mypy .",
 ]}
