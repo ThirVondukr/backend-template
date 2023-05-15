@@ -21,7 +21,7 @@ def anyio_backend() -> str:
 
 @pytest.fixture(scope="session")
 def fastapi_app() -> FastAPI:
-    from api.app import create_app
+    from adapters.api.app import create_app
 
     return create_app()
 

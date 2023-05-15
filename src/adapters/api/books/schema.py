@@ -1,6 +1,6 @@
 import pydantic
 
-from api.schema import BaseSchema
+from adapters.api.schema import BaseSchema
 
 
 class BookSchema(BaseSchema):

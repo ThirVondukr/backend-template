@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 import sentry
-from api import books
+from adapters.api import books
 
 from .middleware import CommitSessionMiddleware
 
