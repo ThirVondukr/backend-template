@@ -23,6 +23,7 @@ stages:
   only:
     changes:
       - "**/*.py"
+      - .gitlab-ci.yml
       - pdm.lock
       - pyproject.toml
 
