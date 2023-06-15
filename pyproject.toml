@@ -1,6 +1,6 @@
 [project]
 name = ""
-version = ""
+version = "0.0.1"
 description = ""
 license = { text = "MIT" }
 authors = [
@@ -110,7 +110,6 @@ ignore = [
     "ANN102",
     "D", # pydocstyle
     "PD",  # pandas-vet
-    "I",  # Isort
     "INP",
     "TCH001",
     "TCH002",
@@ -132,15 +131,7 @@ max-complexity = 6
 
 [tool.ruff.flake8-bugbear]
 extend-immutable-calls = [
-    "fastapi.Body",
-    "fastapi.Cookie",
-    "fastapi.Depends",
-    "fastapi.File",
-    "fastapi.Form",
-    "fastapi.Header",
-    "fastapi.Path",
     "fastapi.Query",
-    "fastapi.Security",
 ]
 
 [tool.ruff.pep8-naming]
@@ -151,7 +142,8 @@ staticmethod-decorators = ["staticmethod"]
 [tool.pdm.scripts]
 lint = {composite = [
     "black .",
-    "ruff .",
+    "ruff . --fix",
+    "black .",
     "mypy .",
 ]}
 test = {composite = [

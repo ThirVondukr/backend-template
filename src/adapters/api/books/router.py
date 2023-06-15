@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from core.books.dto import BookCreateDto
@@ -21,7 +23,7 @@ router = APIRouter(
 )
 async def books_create(
     schema: BookCreateSchema,
-    book_service: BookService = Depends(),
+    book_service: Annotated[BookService, Depends()],
 ) -> BookSchema:
     try:
         book = await book_service.create(dto=BookCreateDto.from_orm(schema))
@@ -40,7 +42,7 @@ async def books_create(
 )
 async def books_retrieve(
     book_id: int,
-    book_service: BookService = Depends(),
+    book_service: Annotated[BookService, Depends()],
 ) -> BookSchema:
     book = await book_service.get_one(book_id=book_id)
     if not book:

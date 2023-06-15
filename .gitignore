@@ -10,5 +10,5 @@ __pycache__
 .vscode
 .coverage
 coverage.xml
-.pdm.toml
+.pdm-python
 /.k8s/*/values-dev.yaml

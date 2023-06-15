@@ -1,4 +1,4 @@
-FROM python:3.11-slim as build
+FROM python:3.11.4-slim as build
 
 RUN pip install pdm
 COPY ./pyproject.toml ./pdm.lock ./
