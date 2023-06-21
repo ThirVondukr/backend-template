@@ -1,9 +1,10 @@
 import uuid
 
 import pytest
+from result import Err, Ok
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.books.dto import BookCreateDto
+from core.books.dto import BookCreateDTO
 from core.books.exceptions import BookAlreadyExistsError
 from core.books.services import BookService
 from db.models import Book
@@ -15,16 +16,18 @@ async def test_create(
     session: AsyncSession,
     book_service: BookService,
 ) -> None:
-    book = await book_service.create(dto=BookCreateDto(title=str(uuid.uuid4())))
-    assert await session.get(Book, book.id)
+    book = await book_service.create(dto=BookCreateDTO(title=str(uuid.uuid4())))
+    assert isinstance(book, Ok)
+    assert await session.get(Book, book.value.id)
 
 
 async def test_create_duplicate_title(
     book: Book,
     book_service: BookService,
 ) -> None:
-    with pytest.raises(BookAlreadyExistsError):
-        await book_service.create(dto=BookCreateDto(title=book.title))
+    result = await book_service.create(dto=BookCreateDTO(title=book.title))
+    assert isinstance(result, Err)
+    assert isinstance(result.value, BookAlreadyExistsError)
 
 
 async def test_get_one(

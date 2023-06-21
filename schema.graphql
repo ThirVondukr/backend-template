@@ -1,0 +1,38 @@
+# This file was generated. Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+interface Error {
+  message: String!
+}
+
+union BookCreateErrors = EntityAlreadyExistsError
+
+type Book {
+  id: ID!
+  title: String!
+}
+
+type BookCreatePayload {
+  error: BookCreateErrors
+  result: Book
+}
+
+type EntityAlreadyExistsError implements Error {
+  message: String!
+}
+
+type Mutation {
+  createBook(input: BookCreateInput!): BookCreatePayload!
+}
+
+type Query {
+  book(id: ID!): Book
+}
+
+input BookCreateInput {
+  title: String!
+}

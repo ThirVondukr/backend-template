@@ -1,9 +1,11 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from result import Err
 
-from core.books.dto import BookCreateDto
+from core.books.dto import BookCreateDTO
 from core.books.exceptions import BookAlreadyExistsError
+from core.books.queries import GetBookQuery
 from core.books.services import BookService
 
 from .schema import BookCreateSchema, BookSchema
@@ -25,12 +27,13 @@ async def books_create(
     schema: BookCreateSchema,
     book_service: Annotated[BookService, Depends()],
 ) -> BookSchema:
-    try:
-        book = await book_service.create(dto=BookCreateDto.from_orm(schema))
-    except BookAlreadyExistsError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST) from e
+    book = await book_service.create(dto=BookCreateDTO.from_orm(schema))
+    if isinstance(book, Err):
+        match book.value:
+            case BookAlreadyExistsError():
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
-    return BookSchema.from_orm(book)
+    return BookSchema.from_orm(book.value)
 
 
 @router.get(
@@ -42,9 +45,9 @@ async def books_create(
 )
 async def books_retrieve(
     book_id: int,
-    book_service: Annotated[BookService, Depends()],
+    book_query: Annotated[GetBookQuery, Depends()],
 ) -> BookSchema:
-    book = await book_service.get_one(book_id=book_id)
+    book = await book_query.execute(book_id=book_id)
     if not book:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 

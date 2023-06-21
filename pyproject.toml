@@ -66,6 +66,7 @@ precision = 2
 [tool.mypy]
 plugins = [
     "pydantic.mypy",
+    "strawberry.ext.mypy_plugin",
 ]
 exclude = "(alembic)"
 

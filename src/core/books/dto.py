@@ -1,5 +1,5 @@
-from core.dto import BaseDto
+from core.dto import BaseDTO
 
 
-class BookCreateDto(BaseDto):
+class BookCreateDTO(BaseDTO):
     title: str

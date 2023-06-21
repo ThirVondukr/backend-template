@@ -1,13 +1,14 @@
 from typing import Annotated
 
 from fastapi import Depends
+from result import Err, Ok, Result
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.dependencies import get_session
 from db.models import Book
 
-from .dto import BookCreateDto
+from .dto import BookCreateDTO
 from .exceptions import BookAlreadyExistsError
 
 
@@ -22,12 +23,13 @@ class BookService:
         book: Book | None = await self._session.get(Book, book_id)
         return book
 
-    async def create(self, dto: BookCreateDto) -> Book:
+    async def create(self, dto: BookCreateDTO) -> Result[Book, BookAlreadyExistsError]:
         if await self._session.scalar(select(Book).where(Book.title == dto.title)):
-            raise BookAlreadyExistsError
+            return Err(BookAlreadyExistsError())
 
-        book = Book(**dto.dict())
+        book = Book(
+            title=dto.title,
+        )
         self._session.add(book)
         await self._session.flush()
-        await self._session.refresh(book)
-        return book
+        return Ok(book)

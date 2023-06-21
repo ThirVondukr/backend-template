@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class BaseDto(BaseModel):
+class BaseDTO(BaseModel):
     class Config:
         orm_mode = True
