@@ -18,7 +18,7 @@ async def test_create(
 ) -> None:
     book = await book_service.create(dto=BookCreateDTO(title=str(uuid.uuid4())))
     assert isinstance(book, Ok)
-    assert await session.get(Book, book.value.id)
+    assert await session.get(Book, book.ok_value.id)
 
 
 async def test_create_duplicate_title(
@@ -27,7 +27,7 @@ async def test_create_duplicate_title(
 ) -> None:
     result = await book_service.create(dto=BookCreateDTO(title=book.title))
     assert isinstance(result, Err)
-    assert isinstance(result.value, BookAlreadyExistsError)
+    assert isinstance(result.err_value, BookAlreadyExistsError)
 
 
 async def test_get_one(

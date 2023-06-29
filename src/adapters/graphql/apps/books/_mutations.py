@@ -26,7 +26,7 @@ class BookMutation:
             result = await command.execute(dto=input_.to_dto())
 
         if isinstance(result, Err):
-            match result.value:
+            match result.err_value:
                 case BookAlreadyExistsError():
                     return BookCreatePayload(
                         result=None,
@@ -34,6 +34,6 @@ class BookMutation:
                     )
 
         return BookCreatePayload(
-            result=BookGQL.from_orm(result.value),
+            result=BookGQL.from_orm(result.ok_value),
             error=None,
         )

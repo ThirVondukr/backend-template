@@ -29,11 +29,11 @@ async def books_create(
 ) -> BookSchema:
     book = await book_service.create(dto=BookCreateDTO.from_orm(schema))
     if isinstance(book, Err):
-        match book.value:
+        match book.err_value:
             case BookAlreadyExistsError():
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
-    return BookSchema.from_orm(book.value)
+    return BookSchema.from_orm(book.ok_value)
 
 
 @router.get(
