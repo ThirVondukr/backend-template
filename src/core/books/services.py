@@ -20,8 +20,7 @@ class BookService:
         self._session = session
 
     async def get_one(self, book_id: int) -> Book | None:
-        book: Book | None = await self._session.get(Book, book_id)
-        return book
+        return await self._session.get(Book, book_id)
 
     async def create(self, dto: BookCreateDTO) -> Result[Book, BookAlreadyExistsError]:
         if await self._session.scalar(select(Book).where(Book.title == dto.title)):
