@@ -1,5 +1,5 @@
 app_name = "fastapi"
-namespace = "fastapi"
+namespace = "dev"
 allow_k8s_contexts(["minikube"])
 
 docker_build(

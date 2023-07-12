@@ -44,9 +44,11 @@ api:
   enabled: true
   args: ["--port", "8000"]
   replicaCount: 3
+  probePath: /health
+  containerPort: 8000
   resources:
     requests:
-      cpu: 1000m
+      cpu: 100m
       memory: 128Mi
     limits:
       memory: 256Mi

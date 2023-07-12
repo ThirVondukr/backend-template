@@ -18,13 +18,22 @@ spec:
         {{- include "api.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+        {{- .Values.imagePullSecrets | toYaml | nindent 8 }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- .Values.podSecurityContext | toYaml | nindent 8 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    {{- include "api.selectorLabels" . | nindent 20 }}
+              weight: 100
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- .Values.securityContext | toYaml | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
@@ -33,16 +42,16 @@ spec:
             {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
           ports:
             - name: http
-              containerPort: 8000
+              containerPort: {{ .Values.api.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health
+              path: {{ .Values.api.probePath }}
               port: http
           readinessProbe:
             httpGet:
-              path: /health
+              path: {{ .Values.api.probePath }}
               port: http
           resources:
-            {{- toYaml .Values.api.resources | nindent 12 }}
+            {{- .Values.api.resources | toYaml | nindent 12 }}
 {{- end -}}
