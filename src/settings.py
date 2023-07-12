@@ -3,7 +3,8 @@ from typing import TypeVar
 from urllib.parse import quote_plus
 
 import dotenv
-from pydantic import BaseSettings, Field
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
@@ -17,8 +18,7 @@ get_settings = functools.lru_cache(get_settings)  # Mypy moment
 
 
 class DatabaseSettings(BaseSettings):
-    class Config:
-        env_prefix = "database_"
+    model_config = SettingsConfigDict(env_prefix="database_")
 
     driver: str = "postgresql+asyncpg"
     name: str
@@ -35,8 +35,7 @@ class DatabaseSettings(BaseSettings):
 
 
 class SentrySettings(BaseSettings):
-    class Config:
-        env_prefix = "sentry_"
+    model_config = SettingsConfigDict(env_prefix="sentry_")
 
     dsn: str = ""
     environment: str = "production"

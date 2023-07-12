@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from pydantic.generics import GenericModel
+from pydantic import BaseModel, ConfigDict
 
 
 def _snake_to_camel(name: str) -> str:
@@ -8,14 +7,8 @@ def _snake_to_camel(name: str) -> str:
 
 
 class BaseSchema(BaseModel):
-    class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
-        alias_generator = _snake_to_camel
-
-
-class GenericSchema(GenericModel):
-    class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
-        alias_generator = _snake_to_camel
+    model_config = ConfigDict(
+        from_attributes=True,
+        populate_by_name=True,
+        alias_generator=_snake_to_camel,
+    )

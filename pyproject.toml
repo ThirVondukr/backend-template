@@ -22,6 +22,7 @@ dependencies = [
     "sentry-sdk>=1.25.1",
     "result>=0.10.0",
     "strawberry-graphql>=0.187.0",
+    "pydantic-settings>=2.0.1",
 ]
 [build-system]
 requires = ["pdm-pep517>=1.0.0"]

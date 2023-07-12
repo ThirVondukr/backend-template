@@ -27,13 +27,13 @@ async def books_create(
     schema: BookCreateSchema,
     book_service: Annotated[BookService, Depends()],
 ) -> BookSchema:
-    book = await book_service.create(dto=BookCreateDTO.from_orm(schema))
+    book = await book_service.create(dto=BookCreateDTO.model_validate(schema))
     if isinstance(book, Err):
         match book.err_value:
             case BookAlreadyExistsError():
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
-    return BookSchema.from_orm(book.ok_value)
+    return BookSchema.model_validate(book.ok_value)
 
 
 @router.get(
@@ -51,4 +51,4 @@ async def books_retrieve(
     if not book:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-    return BookSchema.from_orm(book)
+    return BookSchema.model_validate(book)
