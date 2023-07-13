@@ -5,7 +5,7 @@ stages:
   - build
 #  - deploy
 
-.lint-job: &lint_job
+.lint-job:
   image: python:3.11-slim
   stage: lint
   interruptible: true
@@ -35,27 +35,27 @@ stages:
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 mypy:
-  <<: *lint_job
+  extends: .lint-job
   script:
     - pdm run mypy .
 
 black:
-  <<: *lint_job
+  extends: .lint-job
   script:
     - pdm run black . --check
 
 isort:
-  <<: *lint_job
+  extends: .lint-job
   script:
     - pdm run isort . --check
 
 ruff:
-  <<: *lint_job
+  extends: .lint-job
   script:
     - pdm run ruff .
 
 pytest:
-  <<: *lint_job
+  extends: .lint-job
   variables:
     POSTGRES_PASSWORD: password
     POSTGRES_HOST_AUTH_METHOD: trust
