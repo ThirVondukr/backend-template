@@ -7,7 +7,7 @@ from fastapi import status
 from core.books.dto import BookCreateDTO
 from core.books.services import BookService
 
-pytestmark = [pytest.mark.anyio]
+pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]
 
 
 async def test_not_found(
