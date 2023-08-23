@@ -2,8 +2,9 @@ from typing import Annotated
 
 import strawberry
 
-from adapters.graphql.apps.books.types import BookGQL
 from adapters.graphql.errors import EntityAlreadyExistsErrorGQL
+
+from .types import BookGQL
 
 BookCreateErrors = Annotated[
     EntityAlreadyExistsErrorGQL,

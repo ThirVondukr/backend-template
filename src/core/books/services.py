@@ -1,11 +1,7 @@
-from typing import Annotated
-
-from fastapi import Depends
 from result import Err, Ok, Result
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.dependencies import get_session
 from db.models import Book
 
 from .dto import BookCreateDTO
@@ -15,7 +11,7 @@ from .exceptions import BookAlreadyExistsError
 class BookService:
     def __init__(
         self,
-        session: Annotated[AsyncSession, Depends(get_session)],
+        session: AsyncSession,
     ) -> None:
         self._session = session
 

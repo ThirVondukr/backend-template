@@ -1,3 +1,4 @@
+import enum
 import functools
 from typing import TypeVar
 from urllib.parse import quote_plus
@@ -7,6 +8,12 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 TSettings = TypeVar("TSettings", bound=BaseSettings)
+
+
+class SentryEnvironment(enum.StrEnum):
+    development = enum.auto()
+    staging = enum.auto()
+    production = enum.auto()
 
 
 def get_settings(cls: type[TSettings]) -> TSettings:
@@ -38,5 +45,5 @@ class SentrySettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="sentry_")
 
     dsn: str = ""
-    environment: str = "production"
+    environment: SentryEnvironment = SentryEnvironment.production
     traces_sample_rate: float = Field(default=1.0, ge=0.0, le=1.0)

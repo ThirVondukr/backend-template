@@ -3,14 +3,15 @@ from collections.abc import AsyncIterator
 import dotenv
 import httpx
 import pytest
+from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 
 dotenv.load_dotenv(".env")
 pytest_plugins = [
     "anyio",
+    "sqlalchemy_pytest.database",
     "tests.plugins.services",
     "tests.plugins.database",
-    "sqlalchemy_pytest.database",
 ]
 
 
@@ -20,10 +21,12 @@ def anyio_backend() -> str:
 
 
 @pytest.fixture(scope="session")
-def fastapi_app() -> FastAPI:
+async def fastapi_app() -> AsyncIterator[FastAPI]:
     from adapters.api.app import create_app
 
-    return create_app()
+    app = create_app()
+    async with LifespanManager(app=app):
+        yield app
 
 
 @pytest.fixture

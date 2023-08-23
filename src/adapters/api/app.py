@@ -1,19 +1,33 @@
-from fastapi import FastAPI
+import contextlib
+from collections.abc import AsyncIterator, Iterable
+
+from aioinject.ext.fastapi import InjectMiddleware
+from fastapi import APIRouter, FastAPI
 
 import sentry
 from adapters.api import books
 from adapters.graphql.app import create_graphql_app
+from core.di import create_container
 
-from .middleware import CommitSessionMiddleware
+_routers: Iterable[APIRouter] = [
+    books.router,
+]
 
 
 def create_app() -> FastAPI:
     sentry.init_sentry()
-    app = FastAPI()
+    container = create_container()
 
-    app.include_router(books.router)
+    @contextlib.asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        async with contextlib.aclosing(container):
+            yield
 
-    app.add_middleware(CommitSessionMiddleware)
+    app = FastAPI(lifespan=lifespan)
+    app.add_middleware(InjectMiddleware, container=container)
+
+    for router in _routers:
+        app.include_router(router)
 
     @app.get("/health")
     async def healthcheck() -> None:

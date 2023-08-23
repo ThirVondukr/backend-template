@@ -1,6 +1,3 @@
-from typing import Annotated
-
-from fastapi import Depends
 from result import Result
 
 from db.models import Book
@@ -13,7 +10,7 @@ from .services import BookService
 class BookCreateCommand:
     def __init__(
         self,
-        book_service: Annotated[BookService, Depends()],
+        book_service: BookService,
     ) -> None:
         self._book_service = book_service
 

@@ -1,6 +1,8 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from aioinject import Inject
+from aioinject.ext.fastapi import inject
+from fastapi import APIRouter, HTTPException, status
 from result import Err
 
 from core.books.dto import BookCreateDTO
@@ -23,9 +25,10 @@ router = APIRouter(
     },
     status_code=status.HTTP_201_CREATED,
 )
+@inject
 async def books_create(
     schema: BookCreateSchema,
-    book_service: Annotated[BookService, Depends()],
+    book_service: Annotated[BookService, Inject],
 ) -> BookSchema:
     book = await book_service.create(dto=BookCreateDTO.model_validate(schema))
     if isinstance(book, Err):
@@ -43,9 +46,10 @@ async def books_create(
         status.HTTP_404_NOT_FOUND: {"description": "Book not found"},
     },
 )
+@inject
 async def books_retrieve(
     book_id: int,
-    book_query: Annotated[GetBookQuery, Depends()],
+    book_query: Annotated[GetBookQuery, Inject],
 ) -> BookSchema:
     book = await book_query.execute(book_id=book_id)
     if not book:

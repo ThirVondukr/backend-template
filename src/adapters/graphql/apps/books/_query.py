@@ -1,27 +1,27 @@
 from typing import Annotated
 
 import strawberry
+from aioinject import Inject
+from aioinject.ext.strawberry import inject
 
-from adapters.graphql.apps.books.types import BookGQL
 from core.books.queries import GetBookQuery
-from core.books.services import BookService
-from db.dependencies import create_session
+
+from .types import BookGQL
 
 
 @strawberry.type
 class BookQuery:
     @strawberry.field
+    @inject
     async def book(
         self,
         id_: Annotated[strawberry.ID, strawberry.argument(name="id")],
+        query: Annotated[GetBookQuery, Inject],
     ) -> BookGQL | None:
         try:
             int_id = int(id_)
         except ValueError:
             return None
 
-        async with create_session() as session:
-            command = GetBookQuery(book_service=BookService(session))
-            book = await command.execute(book_id=int_id)
-
+        book = await query.execute(book_id=int_id)
         return BookGQL.from_orm_optional(book)
