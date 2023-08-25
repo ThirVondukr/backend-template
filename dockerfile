@@ -4,6 +4,7 @@ RUN pip install pdm
 COPY ./pyproject.toml ./pdm.lock ./
 RUN pdm export --prod -f requirements -o requirements.txt
 
+
 FROM python:3.11.4-slim
 ENV PYTHONPATH=$PYTHONPATH:/app/src \
     PATH=$PATH:/home/app/.local/bin \

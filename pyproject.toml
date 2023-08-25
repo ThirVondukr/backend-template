@@ -53,6 +53,7 @@ lint = { composite = [
     "black .",
     "ruff . --fix",
     "black .",
+    "deptry ./src",
     "mypy .",
 ] }
 test = { composite = [
@@ -89,7 +90,8 @@ precision = 2
 [tool.deptry.per_rule_ignores]
 DEP002 = ["uvicorn", "uvloop", "asyncpg", "orjson"]
 
-
+[tool.deptry.package_module_name_map]
+uvloop = "uvloop"
 
 [tool.mypy]
 plugins = [

@@ -58,6 +58,12 @@ ruff:
   script:
     - pdm run ruff .
 
+deptry:
+  extends: .lint-job
+  script:
+    - pdm run deptry ./src
+
+
 pytest:
   extends: .lint-job
   variables:
