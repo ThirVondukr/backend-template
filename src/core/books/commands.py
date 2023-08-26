@@ -3,7 +3,7 @@ from result import Result
 from db.models import Book
 
 from .dto import BookCreateDTO
-from .exceptions import BookAlreadyExistsError
+from .errors import BookAlreadyExistsError
 from .services import BookService
 
 

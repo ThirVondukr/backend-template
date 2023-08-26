@@ -14,6 +14,18 @@ def test_core_cant_import_adapters() -> None:
     )
 
 
+def test_adapters_dont_import_services_or_repositories() -> None:
+    (
+        archrule("adapters_dont_import_services")
+        .match("adapters.*")
+        .should_not_import(
+            "core.*.repositories",
+            "core.*.services",
+        )
+        .check("adapters")
+    )
+
+
 def test_adapters_dont_import_each_other() -> None:
     adapter_modules = (
         module.name for module in pkgutil.iter_modules(adapters.__path__)

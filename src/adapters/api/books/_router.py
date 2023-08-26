@@ -5,10 +5,10 @@ from aioinject.ext.fastapi import inject
 from fastapi import APIRouter, HTTPException, status
 from result import Err
 
+from core.books.commands import BookCreateCommand
 from core.books.dto import BookCreateDTO
-from core.books.exceptions import BookAlreadyExistsError
+from core.books.errors import BookAlreadyExistsError
 from core.books.queries import GetBookQuery
-from core.books.services import BookService
 
 from .schema import BookCreateSchema, BookSchema
 
@@ -28,12 +28,12 @@ router = APIRouter(
 @inject
 async def books_create(
     schema: BookCreateSchema,
-    book_service: Annotated[BookService, Inject],
+    command: Annotated[BookCreateCommand, Inject],
 ) -> BookSchema:
-    book = await book_service.create(dto=BookCreateDTO.model_validate(schema))
+    book = await command.execute(dto=BookCreateDTO.model_validate(schema))
     if isinstance(book, Err):
         match book.err_value:
-            case BookAlreadyExistsError():
+            case BookAlreadyExistsError():  # pragma: no branch
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
     return BookSchema.model_validate(book.ok_value)

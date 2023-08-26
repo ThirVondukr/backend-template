@@ -1,10 +1,10 @@
-from core.books.services import BookService
+from core.books.repositories import BookRepository
 from db.models import Book
 
 
 class GetBookQuery:
-    def __init__(self, book_service: BookService) -> None:
-        self._book_service = book_service
+    def __init__(self, repository: BookRepository) -> None:
+        self._repository = repository
 
     async def execute(self, book_id: int) -> Book | None:
-        return await self._book_service.get_one(book_id=book_id)
+        return await self._repository.get(id_=book_id)

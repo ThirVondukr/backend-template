@@ -69,8 +69,9 @@ pythonpath = "src"
 [tool.coverage.run]
 source = ["src"]
 omit = ["src/alembic/*"]
-command_line = "-m pytest -v --reuse-db"
+command_line = "-m pytest -v"
 concurrency = ["greenlet"]
+branch = true
 
 [tool.coverage.report]
 exclude_lines = [
@@ -139,7 +140,9 @@ ignore = [
     "E501", # Line Length
     "ANN101",
     "ANN102",
-    "D", # pydocstyle
+    "D10", # Disable mandatory docstrings
+    "D203", # one-blank-line-before-class
+    "D212", # multi-line-summary-first-line
     "PD", # pandas-vet
     "TCH001",
     "TCH002",
@@ -150,6 +153,7 @@ ignore = [
 [tool.ruff.per-file-ignores]
 "tests/*" = ["S101"]
 "src/alembic/*" = ["INP001"]
+"src/alembic/versions/*" = ["D400", "D415"]
 "src/db/models/*" = ["A003"]
 "src/*/schema.py" = ["A003"]
 
@@ -161,9 +165,7 @@ mark-parentheses = false
 max-complexity = 6
 
 [tool.ruff.flake8-bugbear]
-extend-immutable-calls = [
-    "fastapi.Query",
-]
+extend-immutable-calls = []
 
 [tool.ruff.pep8-naming]
 classmethod-decorators = ["classmethod", "pydantic.validator"]

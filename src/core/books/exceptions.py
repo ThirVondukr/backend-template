@@ -1,2 +1,0 @@
-class BookAlreadyExistsError(Exception):
-    pass

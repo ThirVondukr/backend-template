@@ -1,4 +1,5 @@
-"""Make book title unique
+"""
+Make book title unique
 
 Revision ID: 4b281d647068
 Revises: 7722a16c2bac

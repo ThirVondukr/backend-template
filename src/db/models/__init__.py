@@ -1,4 +1,4 @@
 # Import your models here
-from .book import Book
+from ._book import Book
 
 __all__ = ["Book"]

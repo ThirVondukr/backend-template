@@ -7,7 +7,7 @@ from result import Err
 
 from adapters.graphql.errors import EntityAlreadyExistsErrorGQL
 from core.books.commands import BookCreateCommand
-from core.books.exceptions import BookAlreadyExistsError
+from core.books.errors import BookAlreadyExistsError
 
 from ._inputs import BookCreateInput
 from ._payloads import BookCreatePayload
@@ -27,7 +27,7 @@ class BookMutation:
 
         if isinstance(result, Err):
             match result.err_value:
-                case BookAlreadyExistsError():
+                case BookAlreadyExistsError():  # pragma: no cover
                     return BookCreatePayload(
                         result=None,
                         error=EntityAlreadyExistsErrorGQL(),
