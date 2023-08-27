@@ -1,5 +1,5 @@
 variables:
-  IMAGE_PYTHON: python:3.11.4-slim
+  IMAGE_PYTHON: python:3.11.5-slim-bookworm
   IMAGE_HELM: alpine/helm:3.12.3
 
 image: docker

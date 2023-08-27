@@ -1,11 +1,14 @@
-FROM python:3.11.4-slim as build
+ARG PYTHON_IMAGE=python:3.11.5-slim-bookworm
+
+
+FROM $PYTHON_IMAGE as build
 
 RUN pip install pdm
 COPY ./pyproject.toml ./pdm.lock ./
 RUN pdm export --prod -f requirements -o requirements.txt
 
 
-FROM python:3.11.4-slim
+FROM $PYTHON_IMAGE
 ENV PYTHONPATH=$PYTHONPATH:/app/src \
     PATH=$PATH:/home/app/.local/bin \
     PYTHONUNBUFFERED=1

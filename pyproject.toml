@@ -42,7 +42,7 @@ dev = [
     "ruff>=0.0.285",
     "anyio>=3.7.1",
     "radon>=6.0.1",
-    "sqlalchemy-pytest>=0.1.1",
+    "sqlalchemy-pytest>=0.2.1",
     "asgi-lifespan>=2.1.0",
     "pytest-archon>=0.0.5",
     "deptry>=0.12.0",
@@ -69,7 +69,7 @@ pythonpath = "src"
 [tool.coverage.run]
 source = ["src"]
 omit = ["src/alembic/*"]
-command_line = "-m pytest -v"
+command_line = "-m pytest -v --reuse-db"
 concurrency = ["greenlet"]
 branch = true
 
