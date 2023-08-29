@@ -33,7 +33,7 @@ stages:
 
   before_script:
     - pip install pdm
-    - pdm install
+    - pdm sync
   variables:
     GIT_STRATEGY: clone
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
