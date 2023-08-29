@@ -172,7 +172,7 @@ max-complexity = 6
 extend-immutable-calls = []
 
 [tool.ruff.pep8-naming]
-classmethod-decorators = ["classmethod", "pydantic.validator"]
+classmethod-decorators = ["classmethod"]
 staticmethod-decorators = ["staticmethod"]
 
 [tool.ruff.flake8-tidy-imports]
