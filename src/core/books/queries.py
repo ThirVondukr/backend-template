@@ -2,7 +2,7 @@ from core.books.repositories import BookRepository
 from db.models import Book
 
 
-class GetBookQuery:
+class BookGetQuery:
     def __init__(self, repository: BookRepository) -> None:
         self._repository = repository
 

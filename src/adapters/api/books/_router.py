@@ -8,7 +8,7 @@ from result import Err
 from core.books.commands import BookCreateCommand
 from core.books.dto import BookCreateDTO
 from core.books.errors import BookAlreadyExistsError
-from core.books.queries import GetBookQuery
+from core.books.queries import BookGetQuery
 
 from .schema import BookCreateSchema, BookSchema
 
@@ -49,7 +49,7 @@ async def books_create(
 @inject
 async def books_retrieve(
     book_id: int,
-    book_query: Annotated[GetBookQuery, Inject],
+    book_query: Annotated[BookGetQuery, Inject],
 ) -> BookSchema:
     book = await book_query.execute(book_id=book_id)
     if not book:

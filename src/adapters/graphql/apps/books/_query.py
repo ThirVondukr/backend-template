@@ -4,7 +4,7 @@ import strawberry
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
 
-from core.books.queries import GetBookQuery
+from core.books.queries import BookGetQuery
 
 from .types import BookGQL
 
@@ -16,7 +16,7 @@ class BookQuery:
     async def book(
         self,
         id_: Annotated[strawberry.ID, strawberry.argument(name="id")],
-        query: Annotated[GetBookQuery, Inject],
+        query: Annotated[BookGetQuery, Inject],
     ) -> BookGQL | None:
         try:
             int_id = int(id_)
