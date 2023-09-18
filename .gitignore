@@ -11,4 +11,4 @@ __pycache__
 .coverage
 coverage.xml
 .pdm-python
-/.k8s/*/values-dev.yaml
+/.k8s/app/values.dev.yaml

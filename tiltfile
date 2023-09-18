@@ -19,7 +19,7 @@ yaml = helm(
   namespace=namespace,
   values=[
     ".k8s/app/values.yaml",
-    ".k8s/app/values-dev.yaml",
+    ".k8s/app/values.dev.yaml",
   ],
 )
 k8s_yaml(yaml)
