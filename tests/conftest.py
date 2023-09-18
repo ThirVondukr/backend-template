@@ -10,6 +10,7 @@ dotenv.load_dotenv(".env")
 pytest_plugins = [
     "anyio",
     "sqlalchemy_pytest.database",
+    "tests.plugins.fixture_typecheck",
     "tests.plugins.services",
     "tests.plugins.database",
 ]

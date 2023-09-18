@@ -9,7 +9,7 @@ _TType = TypeVar("_TType")
 class DTOMixinProtocol(Protocol[_TModel_contra, _TType]):
     @classmethod
     def from_orm_list(cls, models: Iterable[_TModel_contra]) -> list[_TType]:
-        ...  # pragma: no coverage
+        ...
 
 
 class DTOMixin(Generic[_TModel_contra]):
@@ -22,7 +22,7 @@ class DTOMixin(Generic[_TModel_contra]):
     def from_orm_optional(
         cls,
         model: _TModel_contra | None,
-    ) -> Self | None:  # pragma: no cover
+    ) -> Self | None:
         if model is None:
             return None
         return cls.from_orm(model)

@@ -27,7 +27,7 @@ class BookMutation:
 
         if isinstance(result, Err):
             match result.err_value:
-                case BookAlreadyExistsError():  # pragma: no cover
+                case BookAlreadyExistsError():  # pragma: no branch
                     return BookCreatePayload(
                         result=None,
                         error=EntityAlreadyExistsErrorGQL(),

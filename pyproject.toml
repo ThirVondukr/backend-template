@@ -46,6 +46,7 @@ dev = [
     "asgi-lifespan>=2.1.0",
     "pytest-archon>=0.0.5",
     "deptry>=0.12.0",
+    "typeguard>=4.1.5",
 ]
 
 [tool.pdm.scripts]
