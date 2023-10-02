@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: {{ include "app.fullname" . }}-migrate
   labels:
-    {{- include "migrations.labels" . | nindent 4}}
+    {{- include "migrations.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
 
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "migrations.labels" . | nindent 8}}
+        {{- include "migrations.labels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       imagePullSecrets:
@@ -29,7 +29,7 @@ spec:
           command:
             {{- .Values.migrations.command | toYaml | nindent 12 }}
           envFrom:
-            {{ .Values.commonEnvFrom | toYaml | nindent 12}}
+            {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
           resources:
             {{- toYaml .Values.migrations.resources | nindent 12 }}
 {{- end -}}

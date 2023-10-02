@@ -39,8 +39,8 @@ spec:
               command:
                 {{- $job.entrypoint | toYaml | nindent 16 }}
               resources:
-                {{ toYaml $.Values.cronjobs.resources | nindent 16 }}
+                {{- toYaml $.Values.cronjobs.resources | nindent 16 }}
               envFrom:
-                {{ $.Values.commonEnvFrom | toYaml  | nindent 16 }}
+                {{- $.Values.commonEnvFrom | toYaml  | nindent 16 }}
 ---
 {{ end }}
