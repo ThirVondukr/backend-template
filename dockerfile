@@ -19,7 +19,7 @@ USER app
 WORKDIR /app
 
 COPY --from=build ./requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt --user
+RUN pip install --no-cache-dir -r requirements.txt --user --no-dependencies
 
 COPY ./src ./src
 COPY alembic.ini ./
