@@ -52,7 +52,6 @@ stages:
     - install-dependencies
   before_script:
     - !reference [.setup, before_script]
-    - pdm sync
   variables:
     GIT_STRATEGY: clone
     CACHE_POLICY: "pull"
@@ -61,7 +60,7 @@ install-dependencies:
   extends: .setup
   stage: lint
   script:
-    - pdm install -G:all
+    - pdm sync -G:all
     - pdm list
 
 mypy:
