@@ -138,7 +138,7 @@ fixable = [
     "RUF",
 ]
 unfixable = [
-    "F841",  # Variable  is assigned to but never used
+    "F841", # Variable  is assigned to but never used
 ]
 select = ["ALL"]
 ignore = [
