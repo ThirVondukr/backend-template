@@ -4,6 +4,7 @@ variables:
   IMAGE_HELM: alpine/helm:3.12.3
   GIT_STRATEGY: clone
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  VENV_DIR: "$CI_PROJECT_DIR/.venv"
 
 default:
   image: $IMAGE_PYTHON
