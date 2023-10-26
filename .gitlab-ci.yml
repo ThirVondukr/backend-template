@@ -51,7 +51,7 @@ stages:
   needs:
     - install-dependencies
   before_script:
-    - pip install pdm
+    - !reference [.setup, before_script]
     - pdm sync
   variables:
     GIT_STRATEGY: clone
