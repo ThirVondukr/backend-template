@@ -34,7 +34,7 @@ stages:
     - python -V
     - pip install pdm
   variables:
-    CACHE_POLICY: "push-pull"
+    CACHE_POLICY: "pull-push"
   cache:
     - *dependencies-cache
   only:
