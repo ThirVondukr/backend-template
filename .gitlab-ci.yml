@@ -62,7 +62,7 @@ install-dependencies:
   stage: lint
   script:
     - pdm install -G:all
-    - task info
+    - pdm list
 
 mypy:
   extends: .lint-job
