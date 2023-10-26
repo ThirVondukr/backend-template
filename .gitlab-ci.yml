@@ -1,70 +1,85 @@
 variables:
+  IMAGE_DOCKER: docker
   IMAGE_PYTHON: python:3.11.5-slim-bookworm
   IMAGE_HELM: alpine/helm:3.12.3
+  GIT_STRATEGY: clone
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
-image: docker
+default:
+  image: $IMAGE_PYTHON
 
 stages:
   - lint
   - build
 #  - deploy
 
-.lint-job:
-  image: $IMAGE_PYTHON
-  stage: lint
+.dependencies-cache: &dependencies-cache
+  - key:
+      files:
+        - pdm.lock
+    paths:
+      - $VENV_DIR
+    policy: ${CACHE_POLICY}
+  - key: $CI_COMMIT_REF_SLUG
+    paths:
+      - $PIP_CACHE_DIR
+    policy: ${CACHE_POLICY}
+
+.setup:
   interruptible: true
+  before_script:
+    - apt -y update && apt -y --no-install-recommends install git curl
+    - sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+    - task --version
+    - python -V
+    - pip install pdm
+  variables:
+    CACHE_POLICY: "push-pull"
   cache:
-    - key:
-        files:
-          - pdm.lock
-      paths:
-        - .venv
-        - .cache/pip
-    - key: $CI_COMMIT_REF_SLUG
-      paths:
-        - .ruff_cache
-        - .mypy_cache
+    - *dependencies-cache
   only:
     changes:
       - "**/*.py"
-      - .gitlab-ci.yml
       - pdm.lock
       - pyproject.toml
+      - .gitlab-ci.yml
+      - Taskfile.yml
 
+.lint-job:
+  extends: .setup
+  stage: lint
+  needs:
+    - install-deps
   before_script:
     - pip install pdm
     - pdm sync
   variables:
     GIT_STRATEGY: clone
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    CACHE_POLICY: "pull"
+
+install-dependencies:
+  extends: .setup
+  stage: lint
+  script:
+    - pdm install -G:all
+    - task info
 
 mypy:
   extends: .lint-job
   script:
-    - pdm run mypy .
+    - task typecheck
 
-black:
+lint:
   extends: .lint-job
   script:
-    - pdm run black . --check
-
-isort:
-  extends: .lint-job
-  script:
-    - pdm run isort . --check
-
-ruff:
-  extends: .lint-job
-  script:
-    - pdm run ruff .
+    - task lint
 
 deptry:
   extends: .lint-job
   script:
-    - pdm run deptry ./src
+    - task deptry
 
-
-pytest:
+test:
   extends: .lint-job
   variables:
     POSTGRES_PASSWORD: password
@@ -79,9 +94,7 @@ pytest:
     - postgres:14
 
   script:
-    - pdm run coverage run
-    - pdm run coverage report -m
-    - pdm run coverage xml
+    - task testcov
   coverage: "/^TOTAL.*\\s(\\d*)/"
   artifacts:
     reports:
@@ -91,6 +104,7 @@ pytest:
 
 build-image:
   stage: build
+  image: $IMAGE_DOCKER
   services:
     - name: docker:dind
       alias: docker

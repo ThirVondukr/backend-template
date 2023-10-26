@@ -1,0 +1,65 @@
+version: "3"
+
+vars:
+  SOURCES: src tests main.py
+  SOURCES_ROOT: src
+
+tasks:
+  default:
+    cmd:
+      task: all
+
+  .pdm:
+    internal: true
+    desc: Ensure that PDM is installed
+    silent: true
+    preconditions:
+      - sh: pdm -V
+        msg: "Please install PDM: https://pdm.fming.dev/latest/#installation"
+
+  lint:
+    desc: Lint python source files
+    deps: [.pdm]
+    cmds:
+      - pdm run ruff {{ .SOURCES }}
+      - pdm run black --check --diff {{.SOURCES}}
+
+  format:
+    desc: Format python source files
+    aliases: ["fmt"]
+    deps: [.pdm]
+    cmds:
+      - pdm run ruff --fix {{.SOURCES}}
+      - pdm run black {{ .SOURCES }}
+
+  deptry:
+    desc: Check used dependencies with deptry
+    deps: [.pdm]
+    silent: true
+    cmd: pdm run deptry {{ .SOURCES_ROOT }}
+
+  typecheck:
+    desc: Perform type-checking
+    deps: [.pdm]
+    silent: true
+    cmd: pdm run mypy --new-type-inference {{.SOURCES}}
+
+  test:
+    desc: Run tests
+    deps: [.pdm]
+    cmd: pdm run coverage run
+
+  testcov:
+    desc: Run tests and generate a coverage report
+    silent: true
+    cmds:
+      - task: test
+      - pdm run coverage report -m
+      - pdm run coverage xml
+
+  all:
+    desc: Run the standard set of checks performed in CI
+    cmds:
+      - task: format
+      - task: deptry
+      - task: typecheck
