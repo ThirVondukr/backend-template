@@ -49,7 +49,7 @@ stages:
   extends: .setup
   stage: lint
   needs:
-    - install-deps
+    - install-dependencies
   before_script:
     - pip install pdm
     - pdm sync
