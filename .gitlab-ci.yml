@@ -61,7 +61,7 @@ install-dependencies:
   extends: .setup
   stage: lint
   script:
-    - pdm sync -G:all
+    - pdm sync -G:all --clean
     - pdm list
 
 mypy:
