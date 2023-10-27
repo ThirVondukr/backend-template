@@ -64,7 +64,7 @@ install-dependencies:
     - pdm sync -G:all --clean
     - pdm list
 
-mypy:
+typecheck:
   extends: .lint-job
   script:
     - task typecheck
