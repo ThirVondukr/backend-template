@@ -5,7 +5,7 @@ import pytest
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import Book
+from app.db.models import Book
 
 pytestmark = [pytest.mark.anyio]
 

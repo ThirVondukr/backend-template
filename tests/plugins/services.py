@@ -3,11 +3,11 @@ import uuid
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.books.dto import BookCreateDTO
-from core.books.repositories import BookRepository
-from core.books.services import BookService
-from db import DBContext
-from db.models import Book
+from app.core.books.dto import BookCreateDTO
+from app.core.books.repositories import BookRepository
+from app.core.books.services import BookService
+from app.db.models import Book
+from lib.db import DBContext
 
 
 @pytest.fixture

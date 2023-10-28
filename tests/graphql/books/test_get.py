@@ -1,6 +1,6 @@
 import pytest
 
-from db.models import Book
+from app.db.models import Book
 from tests.graphql.client import GraphQLClient
 
 pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]

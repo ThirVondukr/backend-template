@@ -1,10 +1,10 @@
 import os
 
 import pytest
+from alembic import config
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from alembic import config
-from db._engine import async_session_factory
+from app.db._engine import async_session_factory
 
 
 @pytest.fixture(scope="session")

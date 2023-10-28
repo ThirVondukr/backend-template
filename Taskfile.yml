@@ -63,3 +63,4 @@ tasks:
       - task: format
       - task: deptry
       - task: typecheck
+      - task: test

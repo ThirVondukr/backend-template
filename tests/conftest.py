@@ -23,7 +23,7 @@ def anyio_backend() -> str:
 
 @pytest.fixture(scope="session")
 async def fastapi_app() -> AsyncIterator[FastAPI]:
-    from adapters.api.app import create_app
+    from app.adapters.api.app import create_app
 
     app = create_app()
     async with LifespanManager(app=app):

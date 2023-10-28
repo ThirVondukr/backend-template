@@ -4,7 +4,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import Book
+from app.db.models import Book
 from tests.graphql.client import GraphQLClient
 
 pytestmark = [pytest.mark.anyio]

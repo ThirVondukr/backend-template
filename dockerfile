@@ -1,4 +1,4 @@
-ARG PYTHON_IMAGE=python:3.11.5-slim-bookworm
+ARG PYTHON_IMAGE=python:3.11.6-slim-bookworm
 
 
 FROM $PYTHON_IMAGE as build
@@ -23,4 +23,4 @@ RUN pip install --no-cache-dir -r requirements.txt --user --no-dependencies
 
 COPY ./src ./src
 COPY alembic.ini ./
-ENTRYPOINT ["uvicorn", "adapters.api.app:create_app", "--factory", "--loop", "uvloop", "--host", "0.0.0.0"]
+ENTRYPOINT ["uvicorn", "app.adapters.api.app:create_app", "--factory", "--loop", "uvloop", "--host", "0.0.0.0"]

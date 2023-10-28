@@ -4,8 +4,8 @@ import httpx
 import pytest
 from fastapi import status
 
-from core.books.dto import BookCreateDTO
-from core.books.services import BookService
+from app.core.books.dto import BookCreateDTO
+from app.core.books.services import BookService
 
 pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]
 

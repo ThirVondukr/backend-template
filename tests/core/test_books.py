@@ -4,11 +4,11 @@ import pytest
 from result import Err, Ok
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.books.dto import BookCreateDTO
-from core.books.errors import BookAlreadyExistsError
-from core.books.repositories import BookRepository
-from core.books.services import BookService
-from db.models import Book
+from app.core.books.dto import BookCreateDTO
+from app.core.books.errors import BookAlreadyExistsError
+from app.core.books.repositories import BookRepository
+from app.core.books.services import BookService
+from app.db.models import Book
 
 pytestmark = [pytest.mark.anyio]
 
