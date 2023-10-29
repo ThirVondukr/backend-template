@@ -7,6 +7,7 @@ from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 
 dotenv.load_dotenv(".env")
+
 pytest_plugins = [
     "anyio",
     "sqlalchemy_pytest.database",

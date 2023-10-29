@@ -3,7 +3,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-from sqlalchemy.engine import Connectable, Connection
+from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app import sentry
@@ -67,7 +67,7 @@ def do_run_migrations(connection: Connection) -> None:
         context.run_migrations()
 
 
-async def do_run_migrations_async(connectable: Connectable) -> None:
+async def do_run_migrations_async(connectable: AsyncEngine) -> None:
     async with connectable.connect() as conn:
         await conn.run_sync(do_run_migrations)
 
@@ -75,9 +75,11 @@ async def do_run_migrations_async(connectable: Connectable) -> None:
 def run_migrations() -> None:
     connectable = context.config.attributes.get("connection")
     if not connectable:
+        if (section := config.get_section(config.config_ini_section)) is None:
+            raise ValueError
         connectable = AsyncEngine(
             engine_from_config(
-                config.get_section(config.config_ini_section),
+                section,
                 poolclass=pool.NullPool,
                 future=True,
             ),

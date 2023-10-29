@@ -70,7 +70,7 @@ pythonpath = "src"
 
 [tool.coverage.run]
 source = ["src"]
-omit = ["src/alembic/*"]
+omit = ["src/app/alembic/*"]
 command_line = "-m pytest -v --reuse-db"
 concurrency = ["greenlet"]
 branch = true
@@ -102,7 +102,6 @@ plugins = [
     "pydantic.mypy",
     "strawberry.ext.mypy_plugin",
 ]
-exclude = "(alembic)"
 
 strict = true
 follow_imports = "normal"
