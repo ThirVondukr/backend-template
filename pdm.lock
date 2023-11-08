@@ -6,7 +6,7 @@ groups = ["default", "dev", "testing"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:5c060eadaa11cc638f49bc9fdcadb6be182a34ca0245d9b257f393da9c324079"
+content_hash = "sha256:a035c3f037b4511048cf6d133cefaa7c98776ae47f6ad21ceaa6d1d13f04d0d6"
 
 [[package]]
 name = "aioinject"
@@ -113,7 +113,7 @@ files = [
 
 [[package]]
 name = "black"
-version = "23.10.1"
+version = "23.11.0"
 requires_python = ">=3.8"
 summary = "The uncompromising code formatter."
 dependencies = [
@@ -124,12 +124,12 @@ dependencies = [
     "platformdirs>=2",
 ]
 files = [
-    {file = "black-23.10.1-cp311-cp311-macosx_10_16_arm64.whl", hash = "sha256:b15b75fc53a2fbcac8a87d3e20f69874d161beef13954747e053bca7a1ce53a0"},
-    {file = "black-23.10.1-cp311-cp311-macosx_10_16_x86_64.whl", hash = "sha256:e293e4c2f4a992b980032bbd62df07c1bcff82d6964d6c9496f2cd726e246ace"},
-    {file = "black-23.10.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7d56124b7a61d092cb52cce34182a5280e160e6aff3137172a68c2c2c4b76bcb"},
-    {file = "black-23.10.1-cp311-cp311-win_amd64.whl", hash = "sha256:3f157a8945a7b2d424da3335f7ace89c14a3b0625e6593d21139c2d8214d55ce"},
-    {file = "black-23.10.1-py3-none-any.whl", hash = "sha256:d431e6739f727bb2e0495df64a6c7a5310758e87505f5f8cde9ff6c0f2d7e4fe"},
-    {file = "black-23.10.1.tar.gz", hash = "sha256:1f8ce316753428ff68749c65a5f7844631aa18c8679dfd3ca9dc1a289979c258"},
+    {file = "black-23.11.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:cf57719e581cfd48c4efe28543fea3d139c6b6f1238b3f0102a9c73992cbb479"},
+    {file = "black-23.11.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:698c1e0d5c43354ec5d6f4d914d0d553a9ada56c85415700b81dc90125aac244"},
+    {file = "black-23.11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:760415ccc20f9e8747084169110ef75d545f3b0932ee21368f63ac0fee86b221"},
+    {file = "black-23.11.0-cp311-cp311-win_amd64.whl", hash = "sha256:58e5f4d08a205b11800332920e285bd25e1a75c54953e05502052738fe16b3b5"},
+    {file = "black-23.11.0-py3-none-any.whl", hash = "sha256:54caaa703227c6e0c87b76326d0862184729a69b73d3b7305b6288e1d830067e"},
+    {file = "black-23.11.0.tar.gz", hash = "sha256:4c68855825ff432d197229846f971bc4d6666ce90492e5b02013bcaca4d9ab05"},
 ]
 
 [[package]]
@@ -780,7 +780,7 @@ files = [
 
 [[package]]
 name = "strawberry-graphql"
-version = "0.211.2"
+version = "0.212.0"
 requires_python = ">=3.8,<4.0"
 summary = "A library for creating GraphQL APIs"
 dependencies = [
@@ -789,8 +789,8 @@ dependencies = [
     "typing-extensions>=4.5.0",
 ]
 files = [
-    {file = "strawberry_graphql-0.211.2-py3-none-any.whl", hash = "sha256:3c58ee8c43f91f4d2b84b84791612cd816d399d5c3eedd9b9a76cbd5649cf42a"},
-    {file = "strawberry_graphql-0.211.2.tar.gz", hash = "sha256:e551b0a2e7b99c99e1fbe006f53a36d258cdd028254d81d6a052e4dd721d0ac6"},
+    {file = "strawberry_graphql-0.212.0-py3-none-any.whl", hash = "sha256:45ed607acf618b5a480ab816d8dc6db9260d43abf8bf3da07a224e0936841fe6"},
+    {file = "strawberry_graphql-0.212.0.tar.gz", hash = "sha256:f9fe8026555109764af5fc8f7404b61ca10b4ed9a0dc66438be153434dbde10f"},
 ]
 
 [[package]]
