@@ -1,11 +1,12 @@
+from http import HTTPStatus
+
 import pytest
 from httpx import AsyncClient
-from starlette import status
 
 pytestmark = [pytest.mark.anyio]
 
 
 async def test_healthcheck(http_client: AsyncClient) -> None:
     response = await http_client.get("/health")
-    assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == HTTPStatus.OK
     assert response.json() is None

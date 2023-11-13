@@ -1,8 +1,9 @@
+from http import HTTPStatus
 from typing import Annotated
 
 from aioinject import Inject
 from aioinject.ext.fastapi import inject
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException
 from result import Err
 
 from app.core.books.commands import BookCreateCommand
@@ -21,9 +22,9 @@ router = APIRouter(
 @router.post(
     "",
     responses={
-        status.HTTP_201_CREATED: {"model": BookSchema},
+        HTTPStatus.CREATED: {"model": BookSchema},
     },
-    status_code=status.HTTP_201_CREATED,
+    status_code=HTTPStatus.CREATED,
 )
 @inject
 async def books_create(
@@ -34,7 +35,7 @@ async def books_create(
     if isinstance(book, Err):
         match book.err_value:
             case BookAlreadyExistsError():  # pragma: no branch
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+                raise HTTPException(status_code=HTTPStatus.BAD_REQUEST)
 
     return BookSchema.model_validate(book.ok_value)
 
@@ -42,8 +43,8 @@ async def books_create(
 @router.get(
     "/{book_id}",
     responses={
-        status.HTTP_200_OK: {"model": BookSchema},
-        status.HTTP_404_NOT_FOUND: {"description": "Book not found"},
+        HTTPStatus.OK: {"model": BookSchema},
+        HTTPStatus.NOT_FOUND: {"description": "Book not found"},
     },
 )
 @inject
@@ -53,6 +54,6 @@ async def books_retrieve(
 ) -> BookSchema:
     book = await book_query.execute(book_id=book_id)
     if not book:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
 
     return BookSchema.model_validate(book)
