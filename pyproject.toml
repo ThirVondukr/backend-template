@@ -174,8 +174,6 @@ staticmethod-decorators = ["staticmethod"]
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "parents"
 
-
-[tool.ruff.lint.flake8-tidy-imports]
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "starlette.status".msg = "Use http.HTTPStatus instead."
 "fastapi.status".msg = "Use http.HTTPStatus instead."
