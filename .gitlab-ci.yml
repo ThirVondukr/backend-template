@@ -56,6 +56,7 @@ stages:
   variables:
     GIT_STRATEGY: clone
     CACHE_POLICY: "pull"
+    RUNNER: "pdm run"
 
 install-dependencies:
   extends: .setup
