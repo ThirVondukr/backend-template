@@ -62,7 +62,7 @@ def test_banned_libraries(modules: str | list[str], libraries: Sequence[str]) ->
     for module in modules:
         (
             archrule(f"{module}-banned-libs")
-            .match(module)
+            .match(f"{module}.*")
             .should_not_import(*libraries)
             .check(module)
         )
