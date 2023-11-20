@@ -44,7 +44,7 @@ tasks:
     desc: Perform type-checking
     deps: [.pdm]
     silent: true
-    cmd: "{{.RUNNER}} mypy --new-type-inference {{.SOURCES}}"
+    cmd: "{{.RUNNER}} mypy {{.SOURCES}}"
 
   test:
     desc: Run tests
