@@ -96,7 +96,7 @@ test:
 
   script:
     - task testcov
-  coverage: "/^TOTAL.*\\s(\\d*)/"
+  coverage: "/^TOTAL.*\\s(\\d*.?\\d*)/"
   artifacts:
     reports:
       coverage_report:
