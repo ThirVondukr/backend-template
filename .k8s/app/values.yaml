@@ -22,19 +22,6 @@ service:
   type: ClusterIP
   port: 80
 
-ingress:
-  enabled: true
-  className: "nginx"
-  annotations: {}
-  hosts: []
-#    - host: fastapi.localhost
-#      paths:
-#        - path: /
-#          pathType: Prefix
-#          serviceName: fastapi
-#          servicePortName: http
-  tls: []
-
 migrations:
   enabled: true
   command: ["alembic", "upgrade", "head"]
@@ -46,6 +33,8 @@ api:
   replicaCount: 3
   probePath: /health
   containerPort: 8000
+  antiAffinity:
+    enable: true
   resources:
     requests:
       cpu: 100m
@@ -56,6 +45,15 @@ api:
   tmpfs:
     enabled: false
     sizeLimit: 1Gi
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations: {}
+    host: ""
+    path: /
+    pathType: Prefix
+    tls: []
 
 cronjobs:
   resources:

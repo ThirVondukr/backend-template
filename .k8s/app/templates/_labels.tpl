@@ -10,16 +10,6 @@ app.kubernetes.io/name: {{ include "application.name" . }}
 {{- end }}
 
 
-{{- define "api.labels" }}
-{{- include "common.labels" . }}
-app.kubernetes.io/component: api
-{{- end }}
-
-{{- define "api.selectorLabels" }}
-{{- include "common.selectorLabels" . }}
-app.kubernetes.io/component: api
-{{- end }}
-
 
 {{- define "migrations.labels" }}
 {{ include "common.labels" . }}

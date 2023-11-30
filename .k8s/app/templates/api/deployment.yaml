@@ -22,6 +22,7 @@ spec:
       securityContext:
         {{- .Values.podSecurityContext | toYaml | nindent 8 }}
       affinity:
+        {{ if .Values.api.antiAffinity.enable -}}
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -30,6 +31,7 @@ spec:
                   matchLabels:
                     {{- include "api.selectorLabels" . | nindent 20 }}
               weight: 100
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -41,27 +43,27 @@ spec:
           envFrom:
             {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
           ports:
-            - name: http
+            - name: {{ include "api.portName" . }}
               containerPort: {{ .Values.api.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: {{ .Values.api.probePath }}
-              port: http
+              port: {{ include "api.portName" . }}
           readinessProbe:
             httpGet:
               path: {{ .Values.api.probePath }}
-              port: http
+              port: {{ include "api.portName" . }}
           resources:
             {{- .Values.api.resources | toYaml | nindent 12 }}
           {{ if .Values.api.tmpfs.enabled -}}
           volumeMounts:
             - mountPath: /tmp
-              name: {{- include "api.tmpfsVolumeName" . }}
+              name: {{ include "api.tmpfsVolumeName" . }}
           {{- end }}
       {{ if .Values.api.tmpfs.enabled -}}
       volumes:
-        - name:  {{- include "api.tmpfsVolumeName" . }}
+        - name:  {{ include "api.tmpfsVolumeName" . }}
           emptyDir:
             sizeLimit: {{ .Values.api.tmpfs.sizeLimit }}
       {{- end }}
