@@ -54,4 +54,15 @@ spec:
               port: http
           resources:
             {{- .Values.api.resources | toYaml | nindent 12 }}
+          {{ if .Values.api.tmpfs.enabled -}}
+          volumeMounts:
+            - mountPath: /tmp
+              name: {{- include "api.tmpfsVolumeName" . }}
+          {{- end }}
+      {{ if .Values.api.tmpfs.enabled -}}
+      volumes:
+        - name:  {{- include "api.tmpfsVolumeName" . }}
+          emptyDir:
+            sizeLimit: {{ .Values.api.tmpfs.sizeLimit }}
+      {{- end }}
 {{- end -}}

@@ -53,6 +53,10 @@ api:
     limits:
       memory: 256Mi
 
+  tmpfs:
+    enabled: false
+    sizeLimit: 1Gi
+
 cronjobs:
   resources:
     requests:
