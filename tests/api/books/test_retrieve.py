@@ -4,8 +4,8 @@ from http import HTTPStatus
 import httpx
 import pytest
 
-from app.core.books.dto import BookCreateDTO
-from app.core.books.services import BookService
+from app.core.domain.books.dto import BookCreateDTO
+from app.core.domain.books.services import BookService
 
 pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]
 

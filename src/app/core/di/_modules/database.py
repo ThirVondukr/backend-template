@@ -6,10 +6,9 @@ from collections.abc import AsyncIterator
 import aioinject
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
+from app.db import async_session_factory, engine
 from lib.db import DBContext
 from lib.types import Providers
-
-from ._engine import async_session_factory, engine
 
 
 @contextlib.asynccontextmanager

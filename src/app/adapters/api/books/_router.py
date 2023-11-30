@@ -6,10 +6,10 @@ from aioinject.ext.fastapi import inject
 from fastapi import APIRouter, HTTPException
 from result import Err
 
-from app.core.books.commands import BookCreateCommand
-from app.core.books.dto import BookCreateDTO
-from app.core.books.errors import BookAlreadyExistsError
-from app.core.books.queries import BookGetQuery
+from app.core.domain.books.commands import BookCreateCommand
+from app.core.domain.books.dto import BookCreateDTO
+from app.core.domain.books.errors import BookAlreadyExistsError
+from app.core.domain.books.queries import BookGetQuery
 
 from .schema import BookCreateSchema, BookSchema
 

@@ -6,8 +6,8 @@ from aioinject.ext.strawberry import inject
 from result import Err
 
 from app.adapters.graphql.errors import EntityAlreadyExistsErrorGQL
-from app.core.books.commands import BookCreateCommand
-from app.core.books.errors import BookAlreadyExistsError
+from app.core.domain.books.commands import BookCreateCommand
+from app.core.domain.books.errors import BookAlreadyExistsError
 
 from ._inputs import BookCreateInput
 from ._payloads import BookCreatePayload

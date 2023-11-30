@@ -1,6 +1,6 @@
 import strawberry
 
-from app.core.books.dto import BookCreateDTO
+from app.core.domain.books.dto import BookCreateDTO
 
 
 @strawberry.input

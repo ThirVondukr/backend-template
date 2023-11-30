@@ -1,4 +1,4 @@
-from app.core.books.repositories import BookRepository
+from app.core.domain.books.repositories import BookRepository
 from app.db.models import Book
 
 

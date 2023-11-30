@@ -4,7 +4,7 @@ import strawberry
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
 
-from app.core.books.queries import BookGetQuery
+from app.core.domain.books.queries import BookGetQuery
 
 from .types import BookGQL
 
