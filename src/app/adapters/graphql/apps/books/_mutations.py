@@ -34,6 +34,6 @@ class BookMutation:
                     )
 
         return BookCreatePayload(
-            result=BookGQL.from_orm(result.ok_value),
+            result=BookGQL.from_dto(result.ok_value),
             error=None,
         )

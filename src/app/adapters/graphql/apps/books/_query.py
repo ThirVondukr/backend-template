@@ -24,4 +24,4 @@ class BookQuery:
             return None
 
         book = await query.execute(book_id=int_id)
-        return BookGQL.from_orm_optional(book)
+        return BookGQL.from_dto_optional(book)

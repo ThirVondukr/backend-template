@@ -12,7 +12,7 @@ class BookGQL(DTOMixin[Book]):
     title: str
 
     @classmethod
-    def from_orm(cls, model: Book) -> Self:
+    def from_dto(cls, model: Book) -> Self:
         return cls(
             id_=strawberry.ID(str(model.id)),
             title=model.title,
