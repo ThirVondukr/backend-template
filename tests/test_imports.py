@@ -2,7 +2,7 @@ import pkgutil
 from collections.abc import Sequence
 
 import pytest
-from pytest_archon import archrule  # type: ignore[attr-defined]
+from pytest_archon import archrule
 
 from app import adapters
 
