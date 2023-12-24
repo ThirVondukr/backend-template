@@ -1,7 +1,7 @@
 variables:
   IMAGE_DOCKER: docker
-  IMAGE_PYTHON: python:3.11.6-slim-bookworm
-  IMAGE_HELM: alpine/helm:3.12.3
+  IMAGE_PYTHON: python:3.11.7-slim-bookworm
+  IMAGE_HELM: alpine/helm:3.13.2
   GIT_STRATEGY: clone
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   VENV_DIR: "$CI_PROJECT_DIR/.venv"
@@ -121,8 +121,18 @@ build-image:
     - docker pull $BUILD_IMAGE || true
     - docker pull $BRANCH_IMAGE || true
 
-    - docker build --cache-from $BUILD_IMAGE --tag $BUILD_IMAGE --target build .
-    - docker build --cache-from $BUILD_IMAGE --cache-from $BRANCH_IMAGE --tag $RUNTIME_IMAGE .
+    - >
+      docker build
+      --cache-from $BUILD_IMAGE
+      --tag $BUILD_IMAGE
+      --build-arg="PYTHON_IMAGE=$IMAGE_PYTHON"
+      --target build .
+    - >
+      docker build
+      --cache-from $BUILD_IMAGE
+      --cache-from $BRANCH_IMAGE
+      --build-arg="PYTHON_IMAGE=$IMAGE_PYTHON"
+      --tag $RUNTIME_IMAGE .
 
     - docker tag $RUNTIME_IMAGE $BRANCH_IMAGE
     - docker push $BUILD_IMAGE
