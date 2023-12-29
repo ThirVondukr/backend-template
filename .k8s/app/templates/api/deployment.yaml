@@ -1,8 +1,8 @@
-{{- if .Values.api.enabled  -}}
+{{- if and .Values.api.enabled .Values.api.ingress.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "api.name" . }}
   labels:
     {{- include "api.labels" . | nindent 4 }}
 spec:
@@ -18,9 +18,9 @@ spec:
         {{- include "api.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        {{- .Values.imagePullSecrets | toYaml | nindent 8 }}
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       securityContext:
-        {{- .Values.podSecurityContext | toYaml | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       affinity:
         {{ if .Values.api.antiAffinity.enable -}}
         podAntiAffinity:
@@ -33,29 +33,33 @@ spec:
               weight: 100
         {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "api.name" . }}
           securityContext:
-            {{- .Values.securityContext | toYaml | nindent 12 }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-            {{- .Values.api.args | toYaml | nindent 12 }}
+            {{ range .Values.api.args }}
+            - {{ . | quote }}
+            {{ end }}
+            - "--port"
+            - {{ include "api.port" . }}
           envFrom:
             {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
           ports:
             - name: {{ include "api.portName" . }}
-              containerPort: {{ .Values.api.containerPort }}
+              containerPort: {{ include "api.port" . }}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ .Values.api.probePath }}
+              path: {{ include "api.probePath" . }}
               port: {{ include "api.portName" . }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.api.probePath }}
+              path: {{ include "api.probePath" . }}
               port: {{ include "api.portName" . }}
           resources:
-            {{- .Values.api.resources | toYaml | nindent 12 }}
+            {{- toYaml .Values.api.resources | nindent 12 }}
           {{ if .Values.api.tmpfs.enabled -}}
           volumeMounts:
             - mountPath: /tmp

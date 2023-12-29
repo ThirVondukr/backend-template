@@ -18,10 +18,6 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
-
 migrations:
   enabled: true
   command: ["alembic", "upgrade", "head"]
@@ -29,10 +25,10 @@ migrations:
 
 api:
   enabled: true
-  args: ["--port", "8000"]
+  port: 8000
+  args: []
   replicaCount: 3
   probePath: /health
-  containerPort: 8000
   antiAffinity:
     enable: true
   resources:
@@ -55,6 +51,9 @@ api:
     pathType: Prefix
     tls: []
 
+  service:
+    type: ClusterIP
+
 cronjobs:
   resources:
     requests:
@@ -62,7 +61,7 @@ cronjobs:
       memory: 128Mi
     limits:
       memory: 256Mi
-  tasks: []
+  tasks: {}
 #    task-name:
 #      schedule: "* * * * *"
 #      entrypoint: ["python", "-m", "package.module"]

@@ -9,17 +9,26 @@ app.kubernetes.io/component: api
 app.kubernetes.io/component: api
 {{- end }}
 
+{{- define "api.name" }}
+{{- include "app.fullname" . }}
+{{- end }}
 
-{{- define "api.tmpfsVolumeName" -}}
-tmpfs
+{{- define "api.service.name" -}}
+{{- include "app.fullname" . }}
 {{- end -}}
 
-
-{{- define "api.serviceName" -}}
-{{- include "app.fullname" . }}
+{{- define "api.port" -}}
+{{ .Values.api.port | quote }}
 {{- end -}}
 
 {{- define "api.portName" -}}
 http
 {{- end -}}
 
+{{- define "api.probePath" -}}
+{{ .Values.api.probePath }}
+{{- end -}}
+
+{{- define "api.tmpfsVolumeName" -}}
+tmpfs
+{{- end -}}

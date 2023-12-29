@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "app.fullname" . }}
+  name: {{ include "api.name" . }}
   labels:
     {{- include "api.labels" . | nindent 4 }}
   annotations:
@@ -10,14 +10,14 @@ metadata:
 spec:
   ingressClassName: {{ .Values.api.ingress.className }}
   rules:
-    - host: {{ .Values.api.ingress.host }}
+    - host: {{ .Values.api.ingress.host | quote }}
       http:
         paths:
           - path: {{ .Values.api.ingress.path }}
             pathType: {{ .Values.api.ingress.pathType }}
             backend:
               service:
-                name: {{ include "api.serviceName" . }}
+                name: {{ include "api.service.name" . }}
                 port:
                   name: {{ include "api.portName" . }}
   tls:

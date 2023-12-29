@@ -1,0 +1,420 @@
+{
+  "$schema": "https://json-schema.org/2022-12/schema#",
+  "$defs": {
+    "k8s.pullPolicy": {
+      "type": "string",
+      "enum": ["Always", "Never", "IfNotPresent"]
+    },
+    "k8s.podSecurityContext": {
+      "type": "object",
+      "properties": {
+        "fsGroup": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "fsGroup"
+      ],
+      "additionalProperties": false
+    },
+    "k8s.volume": {
+      "type": "object",
+      "required": [
+        "name",
+        "secret"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "object",
+          "required": [
+            "secretName"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "secretName": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "k8s.volumeMount": {
+      "type": "object",
+      "required": [
+        "name",
+        "mountPath"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "readOnly": {
+          "type": "boolean"
+        }
+      }
+    },
+    "k8s.resource": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": "string"
+        },
+        "memory": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "k8s.resources": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "$ref": "#/$defs/k8s.resource"
+        },
+        "limits": {
+          "$ref": "#/$defs/k8s.resource"
+        }
+      },
+      "additionalProperties": false
+    },
+    "k8s.securityContext": {
+      "type": "object",
+      "properties": {
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "drop": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "add": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "drop"
+          ],
+          "additionalProperties": false
+        },
+        "readOnlyRootFilesystem": {
+          "type": "boolean"
+        },
+        "runAsNonRoot": {
+          "type": "boolean"
+        },
+        "runAsUser": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "readOnlyRootFilesystem",
+        "runAsNonRoot",
+        "runAsUser"
+      ],
+      "additionalProperties": false
+    },
+    "secretRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "title": "Values",
+  "type": "object",
+  "properties": {
+    "image": {
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "$ref": "#/$defs/k8s.pullPolicy"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pullPolicy",
+        "tag"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "probePath": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "replicaCount": {
+          "type": "integer"
+        },
+        "resources": {
+          "$ref": "#/$defs/k8s.resources"
+        },
+        "tmpfs": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "sizeLimit": {
+              "type": "string"
+            }
+          }
+        },
+        "antiAffinity": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        },
+        "ingress": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "host": {
+              "type": "string"
+            },
+            "className": {
+              "type": "string"
+            },
+            "annotations": {
+              "type": "object"
+            },
+            "path": {
+              "type": "string"
+            },
+            "pathType": {
+              "type": "string"
+            },
+            "tls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "hosts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "secretName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "hosts",
+                  "secretName"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "enabled",
+            "host",
+            "className",
+            "annotations",
+            "path",
+            "pathType",
+            "tls"
+          ],
+          "additionalProperties": false
+        },
+        "service": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "args",
+        "enabled",
+        "probePath",
+        "ingress",
+        "port",
+        "replicaCount",
+        "resources",
+        "service",
+        "tmpfs"
+      ],
+      "additionalProperties": false
+    },
+    "commonEnvFrom": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "configMapRef": {
+            "$ref": "#/$defs/secretRef"
+          },
+          "secretRef": {
+            "$ref": "#/$defs/secretRef"
+          }
+        },
+        "minProperties": 1
+      }
+    },
+    "cronjobs": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/$defs/k8s.resources"
+        },
+        "tasks": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z-]+$": {
+              "type": "object",
+              "properties": {
+                "schedule": {
+                  "type": "string"
+                },
+                "entrypoint": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "suspended": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "schedule",
+                "entrypoint"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "required": [
+        "resources"
+      ],
+      "additionalProperties": false
+    },
+    "fullnameOverride": {
+      "type": "string"
+    },
+    "nameOverride": {
+      "type": "string"
+    },
+    "securityContext": {
+      "$ref": "#/$defs/k8s.securityContext"
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "migrations": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resources": {
+          "$ref": "#/$defs/k8s.resources"
+        }
+      },
+      "required": [
+        "enabled",
+        "command",
+        "resources"
+      ],
+      "additionalProperties": false
+    },
+    "podSecurityContext": {
+      "$ref": "#/$defs/k8s.podSecurityContext"
+    },
+    "podAnnotations": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z.]+$": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "api",
+    "commonEnvFrom",
+    "cronjobs",
+    "fullnameOverride",
+    "image",
+    "imagePullSecrets",
+    "migrations",
+    "nameOverride",
+    "podAnnotations",
+    "podSecurityContext",
+    "securityContext"
+  ]
+}
