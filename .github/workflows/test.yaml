@@ -6,6 +6,8 @@ jobs:
     services:
       postgres:
         image: postgres:16.1-bookworm
+        ports:
+          - "5432:5432"
         env:
           POSTGRES_PASSWORD: password
           POSTGRES_HOST_AUTH_METHOD: trust
