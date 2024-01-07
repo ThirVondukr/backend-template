@@ -1,0 +1,38 @@
+name: Lint
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - 3.11.7
+        job:
+          - deptry src
+          - mypy .
+          - black --check .
+          - ruff check .
+          - |
+            coverage run
+            coverage report -m
+            coverage xml
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache PIP
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            .venv
+          key: pip-${{ matrix.python-version }}-${{ hashFiles('pdm.lock') }}
+      - name: Install PDM
+        run: |
+          pip install pdm
+          pdm sync --clean
+
+      - run: pdm run ${{ matrix.job }}
