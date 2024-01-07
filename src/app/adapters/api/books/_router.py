@@ -31,7 +31,7 @@ async def books_create(
     schema: BookCreateSchema,
     command: Annotated[BookCreateCommand, Inject],
 ) -> BookSchema:
-    book = await command.execute(dto=BookCreateDTO.model_validate(schema))
+    book = await command.execute(dto=BookCreateDTO(title=schema.title))
     if isinstance(book, Err):
         match book.err_value:
             case BookAlreadyExistsError():  # pragma: no branch
