@@ -1,5 +1,5 @@
 import functools
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import dotenv
 from pydantic_settings import BaseSettings
@@ -7,9 +7,15 @@ from pydantic_settings import BaseSettings
 TSettings = TypeVar("TSettings", bound=BaseSettings)
 
 
-def get_settings(cls: type[TSettings]) -> TSettings:
+@functools.cache
+def _load_dotenv_once() -> None:
     dotenv.load_dotenv()
+
+
+def get_settings(cls: type[TSettings]) -> TSettings:
+    _load_dotenv_once()
     return cls()
 
 
-get_settings = functools.lru_cache(get_settings)  # Mypy moment
+if not TYPE_CHECKING:  # Applying funtools.lru_cache returns Any
+    get_settings = functools.lru_cache(get_settings)
