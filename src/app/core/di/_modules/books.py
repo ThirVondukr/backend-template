@@ -7,8 +7,8 @@ from app.core.domain.books.services import BookService
 from lib.types import Providers
 
 providers: Providers = [
-    aioinject.Callable(BookRepository),
-    aioinject.Callable(BookService),
-    aioinject.Callable(BookGetQuery),
-    aioinject.Callable(BookCreateCommand),
+    aioinject.Scoped(BookRepository),
+    aioinject.Scoped(BookService),
+    aioinject.Scoped(BookGetQuery),
+    aioinject.Scoped(BookCreateCommand),
 ]

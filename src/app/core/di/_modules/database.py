@@ -29,6 +29,6 @@ async def db_context(session: AsyncSession) -> DBContext:
 
 providers: Providers = [
     aioinject.Singleton(create_engine),
-    aioinject.Callable(create_session),
-    aioinject.Callable(db_context),
+    aioinject.Scoped(create_session),
+    aioinject.Scoped(db_context),
 ]
