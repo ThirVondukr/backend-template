@@ -17,5 +17,5 @@ def get_settings(cls: type[TSettings]) -> TSettings:
     return cls()
 
 
-if not TYPE_CHECKING:  # Applying funtools.lru_cache returns Any
+if not TYPE_CHECKING:  # pragma: no cover
     get_settings = functools.lru_cache(get_settings)
