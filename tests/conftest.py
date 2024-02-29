@@ -1,13 +1,17 @@
 import pkgutil
 from collections.abc import AsyncIterator
+from datetime import datetime
+from typing import cast
 
 import dotenv
 import httpx
 import pytest
+from _pytest.fixtures import SubRequest
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 
 import tests.plugins
+from lib.time import utc_now
 
 dotenv.load_dotenv(".env")
 
@@ -53,3 +57,13 @@ async def http_client(fastapi_app: FastAPI) -> AsyncIterator[httpx.AsyncClient]:
 @pytest.fixture(scope="session")
 def worker_id() -> str:
     return "main"
+
+
+@pytest.fixture
+def now() -> datetime:
+    return utc_now()
+
+
+@pytest.fixture(params=[0, 1, 10])
+def collection_size(request: SubRequest) -> int:
+    return cast(int, request.param)
