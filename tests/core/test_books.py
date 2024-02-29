@@ -1,6 +1,5 @@
 import uuid
 
-import pytest
 from result import Err, Ok
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,8 +8,6 @@ from app.core.domain.books.errors import BookAlreadyExistsError
 from app.core.domain.books.repositories import BookRepository
 from app.core.domain.books.services import BookService
 from app.db.models import Book
-
-pytestmark = [pytest.mark.anyio]
 
 
 async def test_create(

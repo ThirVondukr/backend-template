@@ -3,7 +3,7 @@ import pytest
 from app.db.models import Book
 from tests.graphql.client import GraphQLClient
 
-pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]
+pytestmark = pytest.mark.usefixtures("session")
 
 QUERY = """
 query GetBookById($id: ID!) {

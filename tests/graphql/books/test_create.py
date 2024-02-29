@@ -1,13 +1,10 @@
 import uuid
 
-import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import Book
 from tests.graphql.client import GraphQLClient
-
-pytestmark = [pytest.mark.anyio]
 
 QUERY = """
 mutation CreateBook($input: BookCreateInput!) {

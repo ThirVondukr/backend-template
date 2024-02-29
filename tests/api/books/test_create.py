@@ -2,12 +2,9 @@ import uuid
 from http import HTTPStatus
 
 import httpx
-import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import Book
-
-pytestmark = [pytest.mark.anyio]
 
 
 async def test_base_case(

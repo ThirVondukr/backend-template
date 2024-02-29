@@ -7,7 +7,7 @@ import pytest
 from app.core.domain.books.dto import BookCreateDTO
 from app.core.domain.books.services import BookService
 
-pytestmark = [pytest.mark.anyio, pytest.mark.usefixtures("session")]
+pytestmark = [pytest.mark.usefixtures("session")]
 
 
 async def test_not_found(
