@@ -1,3 +1,4 @@
+import pkgutil
 from collections.abc import AsyncIterator
 
 import dotenv
@@ -6,14 +7,21 @@ import pytest
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 
+import tests.plugins
+
 dotenv.load_dotenv(".env")
 
 pytest_plugins = [
     "anyio",
     "sqlalchemy_pytest.database",
-    "tests.plugins.fixture_typecheck",
-    "tests.plugins.services",
-    "tests.plugins.database",
+    *(
+        mod.name
+        for mod in pkgutil.walk_packages(
+            tests.plugins.__path__,
+            prefix="tests.plugins.",
+        )
+        if not mod.ispkg
+    ),
 ]
 
 
