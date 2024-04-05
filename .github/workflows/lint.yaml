@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - 3.11.7
+          - 3.11.9
         job:
           - deptry src
           - mypy .
