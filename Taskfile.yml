@@ -23,7 +23,7 @@ tasks:
     desc: Lint python source files
     deps: [.pdm]
     cmds:
-      - "{{.RUNNER}} ruff {{.SOURCES}}"
+      - "{{.RUNNER}} ruff check {{.SOURCES}}"
       - "{{.RUNNER}} black --check --diff {{.SOURCES}}"
 
   format:
@@ -31,7 +31,7 @@ tasks:
     aliases: ["fmt"]
     deps: [.pdm]
     cmds:
-      - "{{.RUNNER}} ruff --fix {{.SOURCES}}"
+      - "{{.RUNNER}} ruff check --fix {{.SOURCES}}"
       - "{{.RUNNER}} black {{ .SOURCES }}"
 
   deptry:
