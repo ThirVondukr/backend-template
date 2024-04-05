@@ -4,7 +4,7 @@ from collections.abc import AsyncIterator, Iterable
 from aioinject.ext.fastapi import AioInjectMiddleware
 from fastapi import APIRouter, FastAPI
 
-from app import sentry
+from app import telemetry
 from app.adapters.api import books
 from app.adapters.graphql.app import create_graphql_app
 from app.core.di import create_container
@@ -15,7 +15,7 @@ _routers: Iterable[APIRouter] = [
 
 
 def create_app() -> FastAPI:
-    sentry.init_sentry()
+    telemetry.setup_telemetry()
     container = create_container()
 
     @contextlib.asynccontextmanager
