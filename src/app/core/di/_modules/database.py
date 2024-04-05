@@ -15,9 +15,8 @@ from lib.types import Providers
 async def create_engine() -> AsyncIterator[AsyncEngine]:
     try:
         yield engine
-    except:
+    finally:
         await engine.dispose()
-        raise
 
 
 @contextlib.asynccontextmanager
