@@ -32,7 +32,7 @@ tasks:
     deps: [.pdm]
     cmds:
       - "{{.RUNNER}} ruff check --fix {{.SOURCES}}"
-      - "{{.RUNNER}} black {{ .SOURCES }}"
+      - "{{.RUNNER}} ruff format {{ .SOURCES }}"
 
   deptry:
     desc: Check used dependencies with deptry
