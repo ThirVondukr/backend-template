@@ -51,8 +51,8 @@ testing = [
 
 [tool.pdm.scripts]
 lint = { composite = [
-    "black .",
     "ruff . --fix",
+    "ruff format .",
     "black .",
     "deptry ./src",
     "mypy .",

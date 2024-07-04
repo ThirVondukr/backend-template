@@ -24,7 +24,7 @@ tasks:
     deps: [.pdm]
     cmds:
       - "{{.RUNNER}} ruff check {{.SOURCES}}"
-      - "{{.RUNNER}} black --check --diff {{.SOURCES}}"
+      - "{{.RUNNER}} ruff format --check --diff {{.SOURCES}}"
 
   format:
     desc: Format python source files
