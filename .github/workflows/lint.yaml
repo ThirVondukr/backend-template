@@ -10,7 +10,7 @@ jobs:
         job:
           - deptry src
           - mypy .
-          - black --check .
+          - ruff format --check .
           - ruff check .
 
     steps:

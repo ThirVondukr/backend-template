@@ -1,4 +1,6 @@
 import enum
+from http import HTTPMethod
+from typing import Literal
 from urllib.parse import quote_plus
 
 from pydantic import Field
@@ -17,6 +19,14 @@ class SentryEnvironment(enum.StrEnum):
     development = enum.auto()
     staging = enum.auto()
     production = enum.auto()
+
+
+class AppSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="app_")
+
+    cors_allow_origins: list[str] = []
+    cors_allow_methods: list[Literal["*"] | HTTPMethod] = ["*"]
+    cors_allow_headers: list[str] = ["authorization"]
 
 
 class DatabaseSettings(BaseSettings):
