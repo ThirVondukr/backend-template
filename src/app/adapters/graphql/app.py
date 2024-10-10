@@ -12,7 +12,7 @@ class GraphQLApp(GraphQL[Context, None]):
     async def get_context(
         self,
         request: Request | WebSocket,
-        response: Response | None = None,
+        response: Response | WebSocket,
     ) -> Context:
         return Context(
             request=request,

@@ -47,7 +47,7 @@ async def fastapi_app() -> AsyncIterator[FastAPI]:
 async def http_client(fastapi_app: FastAPI) -> AsyncIterator[httpx.AsyncClient]:
     async with httpx.AsyncClient(
         transport=httpx.ASGITransport(
-            app=fastapi_app,  # type: ignore[arg-type]
+            app=fastapi_app,
         ),
         base_url="http://test",
     ) as client:

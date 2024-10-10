@@ -14,7 +14,7 @@ T = TypeVar("T")
 @dataclasses.dataclass(slots=True, kw_only=True)
 class Context:
     request: Request | WebSocket
-    response: Response | None
+    response: Response | WebSocket
     loaders: Dataloaders
 
 

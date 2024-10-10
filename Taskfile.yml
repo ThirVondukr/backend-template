@@ -31,8 +31,8 @@ tasks:
     aliases: ["fmt"]
     deps: [.pdm]
     cmds:
-      - "{{.RUNNER}} ruff check --fix {{.SOURCES}}"
       - "{{.RUNNER}} ruff format {{ .SOURCES }}"
+      - "{{.RUNNER}} ruff check --fix {{.SOURCES}}"
 
   deptry:
     desc: Check used dependencies with deptry

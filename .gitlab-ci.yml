@@ -5,6 +5,7 @@ variables:
   GIT_STRATEGY: clone
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   VENV_DIR: "$CI_PROJECT_DIR/.venv"
+  UV_VERSION: ">=0.4.20"
 
 default:
   image: $IMAGE_PYTHON
@@ -33,7 +34,7 @@ stages:
     - sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
     - task --version
     - python -V
-    - pip install pdm
+    - pip install "uv$UV_VERSION"
   variables:
     CACHE_POLICY: "pull-push"
   cache:
@@ -56,7 +57,7 @@ stages:
   variables:
     GIT_STRATEGY: clone
     CACHE_POLICY: "pull"
-    RUNNER: "pdm run"
+    RUNNER: "uv run"
 
 install-dependencies:
   extends: .setup
