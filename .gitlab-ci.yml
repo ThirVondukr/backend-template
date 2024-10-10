@@ -18,7 +18,7 @@ stages:
 .dependencies-cache: &dependencies-cache
   - key:
       files:
-        - pdm.lock
+        - uv.lock
     paths:
       - $VENV_DIR
     policy: ${CACHE_POLICY}
@@ -42,7 +42,7 @@ stages:
   only:
     changes:
       - "**/*.py"
-      - pdm.lock
+      - uv.lock
       - pyproject.toml
       - .gitlab-ci.yml
       - Taskfile.yml
@@ -63,8 +63,8 @@ install-dependencies:
   extends: .setup
   stage: lint
   script:
-    - pdm sync -G:all --clean
-    - pdm list
+    - uv sync
+    - uv list
 
 typecheck:
   extends: .lint-job
