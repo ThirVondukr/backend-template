@@ -127,12 +127,14 @@ build-image:
       --cache-from $BUILD_IMAGE
       --tag $BUILD_IMAGE
       --build-arg="PYTHON_IMAGE=$IMAGE_PYTHON"
+      --build-arg="UV_VERSION=$UV_VERSION"
       --target build .
     - >
       docker build
       --cache-from $BUILD_IMAGE
       --cache-from $BRANCH_IMAGE
       --build-arg="PYTHON_IMAGE=$IMAGE_PYTHON"
+      --build-arg="UV_VERSION=$UV_VERSION"
       --tag $RUNTIME_IMAGE .
 
     - docker tag $RUNTIME_IMAGE $BRANCH_IMAGE
