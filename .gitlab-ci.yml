@@ -64,7 +64,7 @@ install-dependencies:
   stage: lint
   script:
     - uv sync
-    - uv list
+    - uv pip list
 
 typecheck:
   extends: .lint-job
