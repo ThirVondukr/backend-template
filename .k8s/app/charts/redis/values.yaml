@@ -1,0 +1,14 @@
+image: valkey/valkey:8.0.1-bookworm
+
+enabled: false
+
+port: 6379
+
+storage:
+  className: ""
+  size: 1Gi
+
+resources: {}
+
+networkPolicy:
+  enabled: false

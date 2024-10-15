@@ -1,0 +1,41 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "redis.fullname" . }}
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+spec:
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: {{ .Values.storage.className }}
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.storage.request }}
+  serviceName: {{ include "redis.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "redis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "redis.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ include "redis.fullname" . }}
+          image: {{ .Values.image }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            {{ .Values.resources | toYaml | nindent 12}}
+          ports:
+            - containerPort: 6379
+              name: redis
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data
+              name: data
+{{- end -}}

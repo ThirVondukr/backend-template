@@ -1,145 +1,49 @@
 {
   "$schema": "https://json-schema.org/2022-12/schema#",
   "$defs": {
-    "k8s.pullPolicy": {
-      "type": "string",
-      "enum": ["Always", "Never", "IfNotPresent"]
-    },
-    "k8s.podSecurityContext": {
-      "type": "object",
-      "properties": {
-        "fsGroup": {
-          "type": "integer"
-        }
+    "custom": {
+      "PullPolicy": {
+        "type": "string",
+        "enum": [
+          "Always",
+          "Never",
+          "IfNotPresent"
+        ]
       },
-      "required": [
-        "fsGroup"
-      ],
-      "additionalProperties": false
-    },
-    "k8s.volume": {
-      "type": "object",
-      "required": [
-        "name",
-        "secret"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "secret": {
-          "type": "object",
-          "required": [
-            "secretName"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "secretName": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "k8s.volumeMount": {
-      "type": "object",
-      "required": [
-        "name",
-        "mountPath"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "mountPath": {
-          "type": "string"
-        },
-        "readOnly": {
-          "type": "boolean"
-        }
-      }
-    },
-    "k8s.resource": {
-      "type": "object",
-      "properties": {
-        "cpu": {
-          "type": "string"
-        },
-        "memory": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "k8s.resources": {
-      "type": "object",
-      "properties": {
-        "requests": {
-          "$ref": "#/$defs/k8s.resource"
-        },
-        "limits": {
-          "$ref": "#/$defs/k8s.resource"
-        }
-      },
-      "additionalProperties": false
-    },
-    "k8s.securityContext": {
-      "type": "object",
-      "properties": {
-        "capabilities": {
-          "type": "object",
-          "properties": {
-            "drop": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "add": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
+      "Storage": {
+        "type": "object",
+        "properties": {
+          "className": {
+            "type": "string"
           },
-          "required": [
-            "drop"
-          ],
-          "additionalProperties": false
+          "size": {
+            "type": "string"
+          }
         },
-        "readOnlyRootFilesystem": {
-          "type": "boolean"
-        },
-        "runAsNonRoot": {
-          "type": "boolean"
-        },
-        "runAsUser": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "readOnlyRootFilesystem",
-        "runAsNonRoot",
-        "runAsUser"
-      ],
-      "additionalProperties": false
+        "required": [
+          "className",
+          "size"
+        ],
+        "additionalProperties": false
+      }
     },
-    "secretRef": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "prefix": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "additionalProperties": false
+    "io.k8s.api.core.v1.PodSecurityContext": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.PodSecurityContext"
+    },
+    "io.k8s.api.core.v1.Volume": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.Volume"
+    },
+    "io.k8s.api.core.v1.VolumeMount": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.VolumeMount"
+    },
+    "io.k8s.api.core.v1.ResourceRequirements": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+    },
+    "io.k8s.api.core.v1.SecurityContext": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
+    },
+    "io.k8s.api.core.v1.EnvFromSource": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.1-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.EnvFromSource"
     }
   },
   "additionalProperties": false,
@@ -152,7 +56,7 @@
           "type": "string"
         },
         "pullPolicy": {
-          "$ref": "#/$defs/k8s.pullPolicy"
+          "$ref": "#/$defs/custom/PullPolicy"
         },
         "tag": {
           "type": "string"
@@ -188,7 +92,7 @@
           "type": "integer"
         },
         "resources": {
-          "$ref": "#/$defs/k8s.resources"
+          "$ref": "#/$defs/io.k8s.api.core.v1.ResourceRequirements"
         },
         "tmpfs": {
           "type": "object",
@@ -293,23 +197,14 @@
     "commonEnvFrom": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "configMapRef": {
-            "$ref": "#/$defs/secretRef"
-          },
-          "secretRef": {
-            "$ref": "#/$defs/secretRef"
-          }
-        },
-        "minProperties": 1
+        "$ref": "#/$defs/io.k8s.api.core.v1.EnvFromSource"
       }
     },
     "cronjobs": {
       "type": "object",
       "properties": {
         "resources": {
-          "$ref": "#/$defs/k8s.resources"
+          "$ref": "#/$defs/io.k8s.api.core.v1.ResourceRequirements"
         },
         "tasks": {
           "type": "object",
@@ -352,7 +247,7 @@
       "type": "string"
     },
     "securityContext": {
-      "$ref": "#/$defs/k8s.securityContext"
+      "$ref": "#/$defs/io.k8s.api.core.v1.SecurityContext"
     },
     "imagePullSecrets": {
       "type": "array",
@@ -382,7 +277,7 @@
           }
         },
         "resources": {
-          "$ref": "#/$defs/k8s.resources"
+          "$ref": "#/$defs/io.k8s.api.core.v1.ResourceRequirements"
         }
       },
       "required": [
@@ -393,7 +288,7 @@
       "additionalProperties": false
     },
     "podSecurityContext": {
-      "$ref": "#/$defs/k8s.podSecurityContext"
+      "$ref": "#/$defs/io.k8s.api.core.v1.PodSecurityContext"
     },
     "podAnnotations": {
       "type": "object",
@@ -402,6 +297,49 @@
           "type": "string"
         }
       }
+    },
+    "redis": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "integer"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "#/$defs/io.k8s.api.core.v1.ResourceRequirements"
+        },
+        "storage": {
+          "$ref": "#/$defs/custom/Storage"
+        },
+        "networkPolicy": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ]
+        },
+        "global": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "image",
+        "enabled",
+        "port",
+        "storage",
+        "resources"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -415,6 +353,7 @@
     "nameOverride",
     "podAnnotations",
     "podSecurityContext",
-    "securityContext"
+    "securityContext",
+    "redis"
   ]
 }
