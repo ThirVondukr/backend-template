@@ -172,11 +172,34 @@
       ],
       "type": "object"
     },
-    "commonEnvFrom": {
-      "items": {
-        "$ref": "#/$defs/io.k8s.api.core.v1.EnvFromSource"
+    "common": {
+      "additionalProperties": false,
+      "properties": {
+        "envFrom": {
+          "items": {
+            "$ref": "#/$defs/io.k8s.api.core.v1.EnvFromSource"
+          },
+          "type": "array"
+        },
+        "volumeMounts": {
+          "items": {
+            "$ref": "#/$defs/io.k8s.api.core.v1.VolumeMount"
+          },
+          "type": "array"
+        },
+        "volumes": {
+          "items": {
+            "$ref": "#/$defs/io.k8s.api.core.v1.Volume"
+          },
+          "type": "array"
+        }
       },
-      "type": "array"
+      "required": [
+        "envFrom",
+        "volumes",
+        "volumeMounts"
+      ],
+      "type": "object"
     },
     "cronjobs": {
       "additionalProperties": false,
@@ -338,11 +361,49 @@
     },
     "securityContext": {
       "$ref": "#/$defs/io.k8s.api.core.v1.SecurityContext"
+    },
+    "workers": {
+      "additionalProperties": false,
+      "properties": {
+        "defs": {
+          "patternProperties": {
+            "^[a-z-]+$": {
+              "additionalProperties": false,
+              "properties": {
+                "args": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "entrypoint": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "entrypoint"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "resources": {
+          "$ref": "#/$defs/io.k8s.api.core.v1.ResourceRequirements"
+        }
+      },
+      "required": [
+        "defs"
+      ],
+      "type": "object"
     }
   },
   "required": [
     "api",
-    "commonEnvFrom",
+    "common",
     "cronjobs",
     "fullnameOverride",
     "image",
@@ -351,8 +412,7 @@
     "nameOverride",
     "podAnnotations",
     "podSecurityContext",
-    "securityContext",
-    "redis"
+    "securityContext"
   ],
   "title": "Values",
   "type": "object"

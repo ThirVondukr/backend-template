@@ -41,6 +41,6 @@ spec:
               resources:
                 {{- toYaml $.Values.cronjobs.resources | nindent 16 }}
               envFrom:
-                {{- $.Values.commonEnvFrom | toYaml  | nindent 16 }}
+                {{- $.Values.common.envFrom | toYaml  | nindent 16 }}
 ---
 {{ end }}

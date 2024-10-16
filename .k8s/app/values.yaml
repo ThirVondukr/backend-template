@@ -19,7 +19,7 @@ securityContext:
   runAsUser: 1000
 
 migrations:
-  enabled: true
+  enabled: false
   command: ["alembic", "upgrade", "head"]
   resources: {}
 
@@ -70,5 +70,14 @@ cronjobs:
 #      suspended: true
 #      entrypoint: ["python", "-m", "package.module"]
 
-commonEnvFrom: []
+workers:
+  resources: {}
+  defs: {}
+
+common:
+  envFrom: []
+  volumes: []
+  volumeMounts: []
+
 imagePullSecrets: []
+

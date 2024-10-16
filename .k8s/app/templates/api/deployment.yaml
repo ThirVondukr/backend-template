@@ -45,7 +45,7 @@ spec:
             - "--port"
             - {{ include "api.port" . | quote }}
           envFrom:
-            {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
+            {{- .Values.common.envFrom | toYaml | nindent 12 }}
           ports:
             - name: {{ include "api.portName" . }}
               containerPort: {{ include "api.port" . }}

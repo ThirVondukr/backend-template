@@ -19,6 +19,14 @@ tasks:
 #      - sh: pdm -V
 #        msg: "Please install PDM: https://pdm.fming.dev/latest/#installation"
 
+  helm-lint:
+    desc: "Lint helm chart"
+    dir: ".k8s/app"
+    cmds:
+      - "helm lint"
+      - cmd: "helm lint -f values.yaml"
+
+
   lint:
     desc: Lint python source files
     deps: [.pdm]

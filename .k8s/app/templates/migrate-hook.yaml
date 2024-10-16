@@ -29,7 +29,7 @@ spec:
           command:
             {{- .Values.migrations.command | toYaml | nindent 12 }}
           envFrom:
-            {{- .Values.commonEnvFrom | toYaml | nindent 12 }}
+            {{- .Values.common.envFrom | toYaml | nindent 12 }}
           resources:
             {{- toYaml .Values.migrations.resources | nindent 12 }}
 {{- end -}}
