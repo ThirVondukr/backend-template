@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - 3.11.9
+          - 3.12.7
         job:
           - deptry src
           - mypy .
@@ -26,9 +26,8 @@ jobs:
             ~/.cache/pip
             .venv
           key: pip-${{ matrix.python-version }}-${{ hashFiles('pdm.lock') }}
-      - name: Install PDM
-        run: |
-          pip install pdm
-          pdm sync --clean
 
-      - run: pdm run ${{ matrix.job }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - run: uv run ${{ matrix.job }}

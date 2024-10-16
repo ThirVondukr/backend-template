@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11.9
+          python-version: 3.12.7
       - name: Cache PIP
         uses: actions/cache@v3
         with:
@@ -25,15 +25,14 @@ jobs:
             ~/.cache/pip
             .venv
           key: pip-${{ matrix.python-version }}-${{ hashFiles('pdm.lock') }}
-      - name: Install PDM
-        run: |
-          pip install pdm
-          pdm sync --clean
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
 
       - run: |
-          pdm run coverage run
-          pdm run coverage report -m
-          pdm run coverage xml
+          uv run coverage run
+          uv run coverage report -m
+          uv run coverage xml
         env:
           DATABASE_TEST_URL: "postgresql+asyncpg://postgres:password@localhost/postgres"
           DATABASE_NAME: " "
