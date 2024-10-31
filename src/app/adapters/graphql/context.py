@@ -1,9 +1,9 @@
 import dataclasses
 from typing import TypeVar
 
-from starlette.requests import Request
-from starlette.responses import Response
-from starlette.websockets import WebSocket
+from fastapi.requests import Request
+from fastapi.responses import Response
+from fastapi.websockets import WebSocket
 from strawberry.types import Info as StrawberryInfo
 
 from .dataloaders import Dataloaders

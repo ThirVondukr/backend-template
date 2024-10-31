@@ -1,6 +1,6 @@
-from starlette.requests import Request
-from starlette.responses import Response
-from starlette.websockets import WebSocket
+from fastapi.requests import Request
+from fastapi.responses import Response
+from fastapi.websockets import WebSocket
 from strawberry.asgi import GraphQL
 
 from .context import Context

@@ -3,7 +3,7 @@ from collections.abc import AsyncIterator, Iterable
 
 from aioinject.ext.fastapi import AioInjectMiddleware
 from fastapi import APIRouter, FastAPI
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 from app import telemetry
 from app.adapters.api import books
