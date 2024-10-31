@@ -15,7 +15,7 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: {{ .Values.storage.request }}
+            storage: {{ .Values.storage.size }}
   serviceName: {{ include "redis.fullname" . }}
   selector:
     matchLabels:
