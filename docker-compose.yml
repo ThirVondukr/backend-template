@@ -9,7 +9,21 @@ services:
       - "8000:8000"
     env_file: .env
 
+
+  database:
+    image: postgres:17.0-alpine
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    env_file: .env
+
+    ports:
+      - "${POSTGRES_PORT? Required}:5432"
+
+
 #  backend-migrate:
 #    build: .
 #    entrypoint: ["alembic", "upgrade", "head"]
 #    env_file: .env
+
+volumes:
+  database-data:
