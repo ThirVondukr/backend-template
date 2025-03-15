@@ -66,4 +66,4 @@ def now() -> datetime:
 
 @pytest.fixture(params=[0, 1, 10])
 def collection_size(request: SubRequest) -> int:
-    return cast(int, request.param)
+    return cast("int", request.param)

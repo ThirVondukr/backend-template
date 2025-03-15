@@ -28,15 +28,15 @@ dependencies = [
 dev-dependencies = [
     "anyio>=4.6.2.post1",
     "asgi-lifespan>=2.1.0",
-    "coverage>=7.6.4",
-    "deptry>=0.21.0",
-    "httpx>=0.27.2",
-    "mypy>=1.13.0",
-    "pytest>=8.3.3",
+    "coverage>=7.6.12",
+    "deptry>=0.23.0",
+    "httpx>=0.28.1",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
     "pytest-archon>=0.0.6",
-    "ruff>=0.7.3",
+    "ruff>=0.11.0",
     "sqlalchemy-pytest>=0.3.2.post1",
-    "typeguard>=4.4.1",
+    "typeguard>=4.4.2",
 ]
 
 
@@ -118,15 +118,13 @@ unfixable = [
 select = ["ALL"]
 ignore = [
     "E501", # Line Length
-    "ANN101",
-    "ANN102",
     "D10", # Disable mandatory docstrings
     "D203", # one-blank-line-before-class
     "D212", # multi-line-summary-first-line
     "PD", # pandas-vet
-    "TCH001",
-    "TCH002",
-    "TCH003",
+    "TC001",
+    "TC002",
+    "TC003",
     "EXE",
     "COM812",  # ruff format conflict
     "ISC001",  # ruff format conflict

@@ -26,4 +26,4 @@ class GraphQLClient:
             },
         )
         response.raise_for_status()
-        return cast(GraphQLResponse, response.json())
+        return cast("GraphQLResponse", response.json())
