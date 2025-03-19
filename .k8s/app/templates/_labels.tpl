@@ -7,6 +7,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 
 {{- define "common.selectorLabels" }}
 app.kubernetes.io/name: {{ include "application.name" . }}
+app.kubernetes.io/part-of: {{ .Release.Name }}
 {{- end }}
 
 
