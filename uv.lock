@@ -210,16 +210,13 @@ lint = [
     { name = "ruff" },
 ]
 test = [
-    { name = "pytest-cov" },
-    { name = "pytest-xdist" },
-]
-tests = [
     { name = "anyio" },
     { name = "asgi-lifespan" },
-    { name = "coverage" },
     { name = "httpx" },
     { name = "pytest" },
     { name = "pytest-archon" },
+    { name = "pytest-cov" },
+    { name = "pytest-xdist" },
     { name = "sqlalchemy-pytest" },
     { name = "typeguard" },
 ]
@@ -249,16 +246,13 @@ lint = [
     { name = "ruff", specifier = ">=0.11.4" },
 ]
 test = [
-    { name = "pytest-cov", specifier = ">=6.1.1" },
-    { name = "pytest-xdist", specifier = ">=3.6.1" },
-]
-tests = [
     { name = "anyio", specifier = ">=4.6.2.post1" },
     { name = "asgi-lifespan", specifier = ">=2.1.0" },
-    { name = "coverage", specifier = ">=7.6.12" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-archon", specifier = ">=0.0.6" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
+    { name = "pytest-xdist", specifier = ">=3.6.1" },
     { name = "sqlalchemy-pytest", specifier = ">=0.3.2.post1" },
     { name = "typeguard", specifier = ">=4.4.2" },
 ]
