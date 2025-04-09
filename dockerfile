@@ -1,8 +1,8 @@
-ARG PYTHON_IMAGE=python:3.12.7-slim-bookworm
+ARG PYTHON_IMAGE=python:3.13.3-slim-bookworm
 
 
 FROM $PYTHON_IMAGE as build
-ARG PYTHON_UV_VERSION=>=0.4.11
+ARG PYTHON_UV_VERSION=>=0.6.13
 
 ENV UV_LINK_MODE=copy \
     UV_COMPILE_BYTECODE=1 \
