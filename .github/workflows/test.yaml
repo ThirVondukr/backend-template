@@ -30,9 +30,7 @@ jobs:
         uses: astral-sh/setup-uv@v3
 
       - run: |
-          uv run coverage run
-          uv run coverage report -m
-          uv run coverage xml
+          uv run pytest --reuse-db -n auto --cov --cov-report=xml:coverage/coverage.xml
         env:
           DATABASE_TEST_URL: "postgresql+asyncpg://postgres:password@localhost/postgres"
           DATABASE_NAME: " "
