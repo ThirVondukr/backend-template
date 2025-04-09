@@ -13,7 +13,7 @@ WORKDIR /app
 RUN pip install uv${PYTHON_UV_VERSION}
 RUN uv venv /app/.venv
 COPY ./pyproject.toml ./uv.lock ./
-RUN uv sync --no-dev --frozen --no-install-project
+RUN uv sync --no-dev --frozen --no-install-project --no-default-groups
 
 
 FROM $PYTHON_IMAGE
