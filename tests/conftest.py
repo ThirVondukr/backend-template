@@ -54,11 +54,6 @@ async def http_client(fastapi_app: FastAPI) -> AsyncIterator[httpx.AsyncClient]:
         yield client
 
 
-@pytest.fixture(scope="session")
-def worker_id() -> str:
-    return "main"
-
-
 @pytest.fixture
 def now() -> datetime:
     return utc_now()

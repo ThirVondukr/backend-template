@@ -57,15 +57,12 @@ tasks:
   test:
     desc: Run tests
     deps: [.pdm]
-    cmd: "{{.RUNNER}} coverage run"
+    cmd: "{{.RUNNER}} pytest --reuse-db -n auto --cov"
 
   testcov:
     desc: Run tests and generate a coverage report
     silent: true
-    cmds:
-      - task: test
-      - "{{.RUNNER}} coverage report -m"
-      - "{{.RUNNER}} coverage xml"
+    cmd: "{{.RUNNER}} pytest --reuse-db -n auto --cov --cov-report=xml:coverage/coverage.xml"
 
   all:
     desc: Run the standard set of checks performed in CI
@@ -73,4 +70,4 @@ tasks:
       - task: format
       - task: deptry
       - task: typecheck
-      - task: testcov
+      - task: test
