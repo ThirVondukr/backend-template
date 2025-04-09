@@ -4,9 +4,9 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.domain.books.dto import BookCreateDTO
+from app.core.domain.books.models import Book
 from app.core.domain.books.repositories import BookRepository
 from app.core.domain.books.services import BookService
-from app.db.models import Book
 from lib.db import DBContext
 
 

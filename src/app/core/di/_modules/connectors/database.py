@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import aioinject
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
-from app.db import async_session_factory, engine
+from app.connectors.db import async_session_factory, engine
 from lib.db import DBContext
 
 if TYPE_CHECKING:

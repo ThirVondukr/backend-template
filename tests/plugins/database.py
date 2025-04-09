@@ -4,7 +4,7 @@ import pytest
 from alembic import config
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.db import async_session_factory
+from app.connectors.db import async_session_factory
 
 
 @pytest.fixture(scope="session")

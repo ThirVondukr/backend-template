@@ -7,12 +7,16 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from app import telemetry
-from app.db import Base
+from app.connectors.db import Base
+from app.connectors.db._autoimport import collect_models
+from app.core import domain
 from app.settings import DatabaseSettings
 from lib.settings import get_settings
 
 telemetry.setup_telemetry()
 config = context.config
+
+collect_models(domain)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

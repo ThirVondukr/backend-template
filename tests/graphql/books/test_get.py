@@ -1,6 +1,6 @@
 import pytest
 
-from app.db.models import Book
+from app.core.domain.books.models import Book
 from tests.graphql.client import GraphQLClient
 
 pytestmark = pytest.mark.usefixtures("session")

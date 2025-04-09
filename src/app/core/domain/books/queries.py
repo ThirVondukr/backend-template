@@ -1,5 +1,5 @@
+from app.core.domain.books.models import Book
 from app.core.domain.books.repositories import BookRepository
-from app.db.models import Book
 
 
 class BookGetQuery:

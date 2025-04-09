@@ -3,7 +3,7 @@ from typing import Self
 import strawberry
 
 from app.adapters.graphql.dto import DTOMixin
-from app.db.models import Book
+from app.core.domain.books.models import Book
 
 
 @strawberry.type(name="Book")

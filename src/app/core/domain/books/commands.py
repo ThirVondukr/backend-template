@@ -1,9 +1,8 @@
 from result import Result
 
-from app.db.models import Book
-
 from .dto import BookCreateDTO
 from .errors import BookAlreadyExistsError
+from .models import Book
 from .services import BookService
 
 

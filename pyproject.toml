@@ -52,7 +52,7 @@ pythonpath = "src"
 
 [tool.coverage.run]
 source = ["src"]
-omit = ["src/app/alembic/*"]
+omit = ["src/app/connectors/db/migrations/*"]
 concurrency = ["greenlet"]
 branch = true
 
@@ -137,8 +137,8 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
-"src/app/alembic/*" = ["INP001"]
-"src/app/alembic/versions/*" = ["D400", "D415"]
+"src/app/connectors/db/migrations/*" = ["INP001"]
+"src/app/connectors/db/migrations/versions/*" = ["D400", "D415", "N999"]
 
 [tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false

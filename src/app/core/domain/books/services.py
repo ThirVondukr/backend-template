@@ -1,10 +1,10 @@
 from result import Err, Ok, Result
 
-from app.db.models import Book
 from lib.db import DBContext
 
 from .dto import BookCreateDTO
 from .errors import BookAlreadyExistsError
+from .models import Book
 from .repositories import BookRepository
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Book
+from app.core.domain.books.models import Book
 
 
 async def test_books_db(session: AsyncSession) -> None:

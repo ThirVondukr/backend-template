@@ -4,7 +4,7 @@ from http import HTTPStatus
 import httpx
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Book
+from app.core.domain.books.models import Book
 
 
 async def test_base_case(
