@@ -4,14 +4,14 @@ requires-python = ">=3.13"
 
 [[package]]
 name = "aioinject"
-version = "0.38.0"
+version = "0.38.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3f/d2/78b7c1c21c49645f9b3f2ce43ec33868280cf046dd2b432d6706e5f2d123/aioinject-0.38.0.tar.gz", hash = "sha256:b5c5e2c6315ee49ccc692664dd7498986ae5fca9f93df2a4896a795e337c05dc", size = 32541 }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/0a/01419f9cfb687da1729844ecd769c77ff872483b8469972302ae546644bb/aioinject-0.38.1.tar.gz", hash = "sha256:6bb5047c6b13eef1b62ee3a5693586b9b44d0bd455cd095b6bd8c0fcfbb5cfd1", size = 32684 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/bd/70c51a209aa4b35c87fdcf5efee279c1611d179685df690cdf70f67af3e6/aioinject-0.38.0-py3-none-any.whl", hash = "sha256:c2b5af93100664ee3ab5694ecc2ab0197c7d7423e5dd78b4b3f31d69f932d898", size = 20028 },
+    { url = "https://files.pythonhosted.org/packages/96/cb/ae16773c926cad56aaba8a00b12938cc363d8ff9cb08626ca722e20f5cec/aioinject-0.38.1-py3-none-any.whl", hash = "sha256:9e79a4c3d018fc615dd11276005683c5ac54966f402dc61818247b3df134a041", size = 20085 },
 ]
 
 [[package]]
@@ -223,7 +223,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aioinject", specifier = ">=0.38.0" },
+    { name = "aioinject", specifier = ">=0.38.1" },
     { name = "alembic", specifier = ">=1.15.2" },
     { name = "asyncpg", specifier = ">=0.30.0" },
     { name = "fastapi", specifier = ">=0.115.12" },

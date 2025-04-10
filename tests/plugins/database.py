@@ -1,10 +1,9 @@
 import os
 
+import aioinject
 import pytest
 from alembic import config
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-
-from app.connectors.db import async_session_factory
 
 
 @pytest.fixture(scope="session")
@@ -13,13 +12,16 @@ def database_url() -> str:
 
 
 @pytest.fixture(autouse=True)
-def _break_sessionmaker() -> None:
-    async_session_factory.configure(bind=None)
+def _break_sessionmaker(async_sessionmaker: async_sessionmaker[AsyncSession]) -> None:
+    async_sessionmaker.configure(bind=None)
 
 
 @pytest.fixture(scope="session", name="async_sessionmaker")
-def async_sessionmaker_() -> async_sessionmaker[AsyncSession]:
-    return async_session_factory
+async def async_sessionmaker_(
+    container: aioinject.Container,
+) -> async_sessionmaker[AsyncSession]:
+    async with container.context() as ctx:
+        return await ctx.resolve(async_sessionmaker[AsyncSession])
 
 
 @pytest.fixture(scope="session")

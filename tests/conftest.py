@@ -2,11 +2,13 @@ import pkgutil
 from datetime import datetime
 from typing import cast
 
+import aioinject
 import dotenv
 import pytest
 from _pytest.fixtures import SubRequest
 
 import tests.plugins
+from app.core.di import create_container
 from lib.time import utc_now
 
 dotenv.load_dotenv(".env")
@@ -38,3 +40,8 @@ def now() -> datetime:
 @pytest.fixture(params=[0, 1, 10])
 def collection_size(request: SubRequest) -> int:
     return cast("int", request.param)
+
+
+@pytest.fixture(scope="session")
+def container() -> aioinject.Container:
+    return create_container()
